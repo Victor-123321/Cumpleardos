@@ -75,47 +75,160 @@ function sendMessage() {
     "Xbox ganó la generación",
     "Mi madre llora 😢",
     "Live Ardo Reaction 😄",
-  
   ];
 
-const messageInput = document.getElementById("message").value.trim();
+  const messageInput = document.getElementById("message").value.trim();
 
-  if (messageInput.toLowerCase().includes("galia")) {
-    window.location.href = "https://www.youtube.com/watch?v=7ODcC5z6Ca0";
-    return;
-  }
-
-   const video = document.getElementById("greetingVideo");
+  const video = document.getElementById("greetingVideo");
   const backgroundMusic = document.getElementById("background-audio");
-  
-  // Check if message is "hola" (case-insensitive)
-  if (messageInput === "hola") {
-    backgroundMusic.pause(); // Pause background music
-    video.style.display = "block";
-    video.volume = 1;
-    video.play();
+
+  // Verifica si existe el video antes de reproducir
+  const videoPath = `Videos/${messageInput.toLowerCase()}.mp4`;
+  fetch(videoPath, { method: "HEAD" })
+    .then((res) => {
+      if (res.ok) {
+        backgroundMusic.pause(); // Pausa la música de fondo
+        video.src = videoPath;
+        video.style.display = "block";
+        video.volume = 1;
+        video.play();
+
+        // Espera a que se carguen los metadatos para obtener la duración real
+        video.onloadedmetadata = function () {
+          setTimeout(() => {
+            video.style.display = "none";
+            video.pause();
+            video.currentTime = 0; // Reinicia el video
+            backgroundMusic.play(); // Reanuda la música
+          }, video.duration * 1000);
+        };
+
+        document.getElementById("message").value = "";
+        return; // Sale de la función si se reproduce el video
+      } else {
+        // Si no existe el video, muestra mensaje aleatorio
+        if (messageInput.toLowerCase().includes("galia")) {
+          window.location.href = "https://www.youtube.com/watch?v=7ODcC5z6Ca0";
+          return;
+        } else if (messageInput.toLowerCase().includes("andres")) {
+          showMessage("Andres se besa con Aldo");
+        } else if (messageInput.toLowerCase().includes("diego")) {
+          showMessage("Diegod esta tranquilizando a Aldo (se ardio)");
+        } else if (messageInput.toLowerCase().includes("otto")) {
+          showMessage("Otto esta en la casaaaaa");
+        } else if (messageInput.toLowerCase().includes("isaac")) {
+          showMessage(
+            "Isaac tambien recibio el mensaje, ahora se chaquetea con Aldo"
+          );
+        } else if (messageInput.toLowerCase().includes("victor")) {
+          showMessage(
+            "Aldo le quiso enseñar el mensaje a Victor, pero Victor no esta, hablale"
+          );
+        } else if (messageInput.toLowerCase().includes("akane")) {
+          showMessage(
+            "Aldo le quiso enseñar el mensaje a Akane, pero Akane no esta, hablale"
+          );
+        } else if (messageInput.toLowerCase().includes("genaro")) {
+          showMessage(
+            "Aldo le quiso enseñar el mensaje a Genaro, pero Genaro no esta, hablale"
+          );
+        } else if (messageInput.toLowerCase().includes("fany")) {
+          showMessage(
+            "Aldo le quiso enseñar el mensaje a Fany, pero ya esta cerca navidad, asi que no esta"
+          );
+        } else if (messageInput.toLowerCase().includes("eilyn")) {
+          showMessage(
+            "Eilyn se fue de sabatico, pero Aldo le hara llegar el mensaje (si no se arde)"
+          );
+        } else if (messageInput.toLowerCase().includes("nestor")) {
+          showMessage("EL toro colarado que no necesita pastillas");
+        } else if (messageInput.toLowerCase().includes("osvaldo")) {
+          showMessage(
+            "Osvaldo? el chambeador super dotado (el aldo se lo quiere besar igual que victor)"
+          );
+        } else if (
+          messageInput.toLowerCase().includes("jesse") ||
+          messageInput.toLowerCase().includes("jessi") ||
+          messageInput.toLowerCase().includes("jessica")
+        ) {
+          showMessage("Un roblox o que? (dice jesse)");
+        } else if (messageInput.toLowerCase().includes("mayra")) {
+          showMessage(
+            "Mayra anda de gira, pero Aldo le hara llegar el mensaje"
+          );
+        } else if (
+          messageInput.toLowerCase().includes("emi") ||
+          messageInput.toLowerCase().includes("emiliano")
+        ) {
+          showMessage(
+            "Emiliano se vino con este mensaje (pero no se ardio, no es como ardo)"
+          );
+        } else if (messageInput.toLowerCase().includes("nadin")) {
+          showMessage(
+            "Nadin dice 'Gott Mit Uns', aldo no lo entiende pero se ardio"
+          );
+        } else if (messageInput.toLowerCase().includes("danna")) {
+          showMessage(
+            "FELICIDADES, encontraste a Danna, tienes 3 dias de buena suerte"
+          );
+        } else if (messageInput.toLowerCase().includes("brandon")) {
+          showMessage(
+            "Dice Aldo que le dijo Diana que le dice Brandon q no puede contestar, pero que le manda saludos (???????)"
+          );
+        } else if (messageInput.toLowerCase().includes("gerardo")) {
+          showMessage(
+            "Gerardo dice, 'funen a los que no han vendido', el ardo en acción, se ardio con esto"
+          );
+        } else if (
+          messageInput.toLowerCase().includes("sesgaro") ||
+          messageInput.toLowerCase().includes("edgar")
+        ) {
+          showMessage(
+            "Aldo nomas lo ve programando pendejadas junto con Victor JAJJAJA"
+          );
+        } else if (
+          messageInput.toLowerCase().includes("juan") ||
+          messageInput.toLowerCase().includes("pablo")
+        ) {
+          showMessage("Esta ocupado jugando minecraft, o no se no soy arqui");
+        } else if (
+          messageInput.toLowerCase().includes("aburrido") ||
+          messageInput.toLowerCase().includes("aburrida")
+        ) {
+          showMessage("Aburrida tu PTM");
+        } else {
+          showRandomMessage();
+        }
+      }
+    })
+    .catch(() => {
+      showRandomMessage();
+    });
+
+  function showRandomMessage() {
+    let randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    if (messageInput.toLowerCase() == "") {
+      randomMessage = "pon algo w estás bien pendejo te ardes mucho";
+    }
+    const notification = document.getElementById("notification");
+    notification.textContent = randomMessage;
+    notification.style.display = "block";
     setTimeout(() => {
-      video.style.display = "none";
-      video.pause();
-      video.currentTime = 0; // Reset video to start
-      backgroundMusic.play(); // Resume background music
-    }, 6500); // Hide video and resume music after 10 seconds
+      notification.style.display = "none";
+    }, 3000);
     document.getElementById("message").value = "";
-    return;
   }
 
-  var randomMessage = messages[Math.floor(Math.random() * messages.length)];
-
-  if(messageInput.toLowerCase() == ""){
-    randomMessage = "pon algo w estás bien pendejo te ardes mucho";
+  // Muestra un mensaje fijo pasado como argumento
+  function showMessage(msg) {
+    const notification = document.getElementById("notification");
+    notification.textContent = msg;
+    notification.style.display = "block";
+    setTimeout(() => {
+      notification.style.display = "none";
+    }, 3000);
+    document.getElementById("message").value = "";
   }
-  const notification = document.getElementById("notification");
-  notification.textContent = randomMessage;
-  notification.style.display = "block";
-  setTimeout(() => {
-    notification.style.display = "none";
-  }, 3000);
-  document.getElementById("message").value = "";
 }
 
 function showPluginMessage() {
