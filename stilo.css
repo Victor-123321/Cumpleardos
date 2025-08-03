@@ -1,0 +1,160 @@
+body {
+  background: url("https://www.toptal.com/designers/subtlepatterns/uploads/sparkle.png")
+    repeat;
+  font-family: Comic Sans MS, cursive;
+  color: #ff00ff;
+  text-align: center;
+  margin: 0;
+  overflow: scroll;
+  position: relative;
+}
+table {
+  width: 100%;
+  border: 5px solid #ffd700;
+  background: linear-gradient(45deg, #ff69b4, #00ffff);
+}
+td {
+  padding: 10px;
+  border: 3px dashed #ffff00;
+}
+.blink {
+  animation: blink 0.8s infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.header {
+  background: url("https://www.toptal.com/designers/subtlepatterns/uploads/balloons.png");
+  color: #ffff00;
+  text-shadow: 3px 3px 6px #ff0000;
+  font-size: 45px;
+}
+.sidebar {
+  width: 20%;
+  background: #00ff00;
+  color: #ff00ff;
+  border: 5px double #ff69b4;
+}
+.footer {
+  background: #ffa500;
+  color: #0000ff;
+  font-size: 14px;
+}
+.button {
+  background: linear-gradient(#ffff00, #ff0000);
+  border: 3px solid #00ffff;
+  padding: 12px;
+  font-size: 22px;
+  cursor: url("https://www.cursor.cc/cursor3d/987654321.cur"), auto;
+}
+.button:hover {
+  transform: rotate(7deg);
+  box-shadow: 6px 6px 12px #00ff00;
+}
+marquee {
+  font-size: 28px;
+  color: #ffff00;
+  background: #ff00ff;
+}
+.under-construction {
+  background: url("https://www.toptal.com/designers/subtlepatterns/uploads/party.gif")
+    no-repeat center;
+  height: 120px;
+}
+.notification {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(#ff0000, #ffff00);
+  color: #00ff00;
+  padding: 20px;
+  border: 5px double #00ffff;
+  font-size: 24px;
+  text-shadow: 2px 2px 4px #ff00ff;
+  animation: blink 0.5s infinite;
+  z-index: 1000;
+  display: none;
+}
+.particle {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  z-index: 500;
+  opacity: 0;
+  animation: particleFade 3s infinite;
+  border: 2px solid #00ffff;
+}
+#particle1 {
+  animation-delay: 0s;
+}
+#particle2 {
+  animation-delay: 0.3s;
+}
+#particle3 {
+  animation-delay: 0.6s;
+}
+#particle4 {
+  animation-delay: 0.9s;
+}
+#particle5 {
+  animation-delay: 1.2s;
+}
+#particle6 {
+  animation-delay: 1.5s;
+}
+#particle7 {
+  animation-delay: 1.8s;
+}
+#particle8 {
+  animation-delay: 2.1s;
+}
+#particle9 {
+  animation-delay: 2.4s;
+}
+#particle10 {
+  animation-delay: 2.7s;
+}
+@keyframes particleFade {
+  0%,
+  20% {
+    opacity: 0.7;
+  }
+  30%,
+  70% {
+    opacity: 0;
+  }
+  80%,
+  100% {
+    opacity: 0.7;
+  }
+}
+.carousel {
+  width: 300px;
+  height: 200px;
+  overflow: hidden;
+  margin: 20px auto;
+  border: 3px solid #ff00ff;
+  background: linear-gradient(#00ffff, #ff69b4);
+}
+.carousel-container {
+  display: flex;
+  animation: slide 16s linear infinite;
+}
+.carousel-image {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border: 2px solid #ffff00;
+}
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-2600px);
+  } /* 6 imágenes x 300px */
+}

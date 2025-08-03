@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=800" />
+    <title>🎉 Cargando la Fiesta de Aldo... 🎂</title>
+    <style>
+      body {
+        background: url("https://www.toptal.com/designers/subtlepatterns/uploads/sparkle.png")
+          repeat;
+        font-family: Comic Sans MS, cursive;
+        color: #ff00ff;
+        text-align: center;
+        margin: 0;
+        overflow: hidden;
+        position: relative;
+      }
+      .blink {
+        animation: blink 0.8s infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+      h1 {
+        font-size: 48px;
+        color: #ffff00;
+        text-shadow: 3px 3px 6px #ff0000;
+        margin-top: 50px;
+      }
+      .loading-bar {
+        width: 300px;
+        height: 30px;
+        border: 3px solid #00ffff;
+        background: linear-gradient(45deg, #ff69b4, #00ff00);
+        margin: 20px auto;
+        position: relative;
+        overflow: hidden;
+      }
+      .loading-progress {
+        width: 0;
+        height: 100%;
+        background: url("https://www.toptal.com/designers/subtlepatterns/uploads/balloons.png");
+        animation: load 2s linear forwards;
+      }
+      @keyframes load {
+        0% {
+          width: 0;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+      .link-container {
+        display: none;
+        margin-top: 20px;
+      }
+      .link-container a {
+        font-size: 24px;
+        color: #00ffff;
+        background: linear-gradient(#ff0000, #ffff00);
+        padding: 10px 20px;
+        border: 3px solid #00ff00;
+        text-decoration: none;
+        text-shadow: 2px 2px 4px #ff00ff;
+        cursor: url("https://www.cursor.cc/cursor3d/987654321.cur"), auto;
+      }
+      .link-container a:hover {
+        transform: rotate(5deg);
+        box-shadow: 5px 5px 10px #ff00ff;
+        display: inline-block;
+      }
+      .background-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        opacity: 0;
+        animation: fade 6s infinite;
+      }
+      @keyframes fade {
+        0%,
+        20% {
+          opacity: 0.4;
+        }
+        30%,
+        70% {
+          opacity: 0;
+        }
+        80%,
+        100% {
+          opacity: 0.4;
+        }
+      }
+      #img1 {
+        animation-delay: 0s;
+      }
+      #img2 {
+        animation-delay: 2s;
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      id="img1"
+      class="background-image"
+      src="2024-10-07-12-42-47-838.jpg"
+      alt="Imagen de fiesta 1"
+    />
+    <img
+      id="img2"
+      class="background-image"
+      src="IMG_20240917_135807_230.jpg"
+      alt="Imagen de fiesta 2"
+    />
+
+    <h1 class="blink">¡Cargando la Fiesta de Ardo! 🎈</h1>
+    <div class="loading-bar">
+      <div class="loading-progress"></div>
+    </div>
+    <div id="linkContainer" class="link-container">
+      <a href="fiesta.html">Entrar a la Fiesta de Aldo</a>
+    </div>
+
+    <script>
+      setTimeout(() => {
+        document.getElementById("linkContainer").style.display = "block";
+      }, 2000);
+    </script>
+  </body>
+</html>
