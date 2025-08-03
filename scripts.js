@@ -75,8 +75,40 @@ function sendMessage() {
     "Xbox ganó la generación",
     "Mi madre llora 😢",
     "Live Ardo Reaction 😄",
+  
   ];
-  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+const messageInput = document.getElementById("message").value.trim();
+
+  if (messageInput.toLowerCase().includes("galia")) {
+    window.location.href = "https://www.youtube.com/watch?v=7ODcC5z6Ca0";
+    return;
+  }
+
+   const video = document.getElementById("greetingVideo");
+  const backgroundMusic = document.getElementById("background-audio");
+  
+  // Check if message is "hola" (case-insensitive)
+  if (messageInput === "hola") {
+    backgroundMusic.pause(); // Pause background music
+    video.style.display = "block";
+    video.volume = 1;
+    video.play();
+    setTimeout(() => {
+      video.style.display = "none";
+      video.pause();
+      video.currentTime = 0; // Reset video to start
+      backgroundMusic.play(); // Resume background music
+    }, 6500); // Hide video and resume music after 10 seconds
+    document.getElementById("message").value = "";
+    return;
+  }
+
+  var randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+  if(messageInput.toLowerCase() == ""){
+    randomMessage = "pon algo w estás bien pendejo te ardes mucho";
+  }
   const notification = document.getElementById("notification");
   notification.textContent = randomMessage;
   notification.style.display = "block";

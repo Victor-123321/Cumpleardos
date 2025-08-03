@@ -7,6 +7,7 @@ body {
   margin: 0;
   overflow: scroll;
   position: relative;
+    cursor: url('ardocursor.png'), auto;
 }
 table {
   width: 100%;
@@ -47,7 +48,6 @@ td {
   border: 3px solid #00ffff;
   padding: 12px;
   font-size: 22px;
-  cursor: url("https://www.cursor.cc/cursor3d/987654321.cur"), auto;
 }
 .button:hover {
   transform: rotate(7deg);

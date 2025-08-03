@@ -41,7 +41,6 @@ td {
   border: 3px solid #00ffff;
   padding: 12px;
   font-size: 22px;
-  cursor: url("https://www.cursor.cc/cursor3d/987654321.cur"), auto;
 }
 .button:hover {
   transform: rotate(7deg);
