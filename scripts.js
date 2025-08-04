@@ -75,6 +75,9 @@ function sendMessage() {
     "Xbox ganó la generación",
     "Mi madre llora 😢",
     "Live Ardo Reaction 😄",
+            "Aldo le quiso enseñar el mensaje a Victor, pero Victor no esta, hablale",
+            "Aldo le quiso enseñar el mensaje a Akane, pero Akane no esta, hablale",
+            "Aldo le quiso enseñar el mensaje a Genaro, pero Genaro no esta, hablale",
   ];
 
   const messageInput = document.getElementById("message").value.trim();
@@ -185,6 +188,12 @@ function sendMessage() {
         ) {
           showMessage(
             "Aldo nomas lo ve programando pendejadas junto con Victor JAJJAJA"
+          );
+        } else if (
+          messageInput.toLowerCase().includes("otto") 
+        ) {
+          showMessage(
+            "Otto?? Sigue vivo??"
           );
         } else if (
           messageInput.toLowerCase().includes("juan") ||

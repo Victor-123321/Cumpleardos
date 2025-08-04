@@ -15,7 +15,7 @@ function repositionParticles() {
 window.addEventListener("load", () => {
   try {
     // Cargar video aleatorio
-    const videoNumber = Math.floor(Math.random() * 9) + 1; // Número entre 1 y 9
+    const videoNumber = Math.floor(Math.random() * 12) + 1; // Número entre 1 y 11
     const videoSource = document.getElementById("videoSource");
     videoSource.src = `Videos/video${videoNumber}.mp4`;
     const video = document.getElementById("birthdayVideo");

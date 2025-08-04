@@ -48,8 +48,18 @@ td {
   border: 3px solid #00ffff;
   padding: 12px;
   font-size: 22px;
+    cursor: url('ardocursor.png'), auto;
+}
+*{
+
+    cursor: url('ardocursor.png'), auto !important;
+}
+a{
+
+    cursor: url('ardocursor.png'), auto;
 }
 .button:hover {
+    cursor: url('ardocursor.png'), auto;
   transform: rotate(7deg);
   box-shadow: 6px 6px 12px #00ff00;
 }
@@ -142,7 +152,7 @@ marquee {
 }
 .carousel-container {
   display: flex;
-  animation: slide 16s linear infinite;
+  animation: slide 20s linear infinite;
 }
 .carousel-image {
   width: 300px;
@@ -155,6 +165,6 @@ marquee {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-2600px);
+    transform: translateX(-2900px);
   } /* 6 imágenes x 300px */
 }
