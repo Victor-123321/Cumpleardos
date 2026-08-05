@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=800" />
+    <title>🎮 Zona de Juegos del Ardo 🕹️</title>
+    <link rel="stylesheet" href="/stilo.css" />
+    <style>
+      /* Estilos adicionales para la cuadrícula de juegos manteniendo el estilo caótico */
+      .games-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 20px;
+      }
+      .game-card {
+        background-color: #000000;
+        border: 5px dashed #ff00ff;
+        padding: 15px;
+        width: 440px;
+        text-align: center;
+      }
+      .game-title {
+        color: #00ffff;
+        font-size: 28px;
+        text-shadow: 2px 2px #ff0000;
+        margin-bottom: 5px;
+      }
+      .game-desc {
+        color: #00ff00;
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
+      iframe {
+        border: 4px solid #ffff00;
+        background: #222;
+      }
+      .play-btn {
+        display: inline-block;
+        margin-top: 15px;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td colspan="2" class="header">
+          <marquee direction="right">👾 ¡BIENVENIDO A LA SALA DE JUEGOS DE ARDO! 👾</marquee>
+          <h1 class="blink">¡Prohibido arderse si pierdes!</h1>
+        </td>
+      </tr>
+      <tr>
+        <td class="sidebar">
+          <h2>🕹️ Menú 🕹️</h2>
+          <a href="/fiesta.html" class="button play-btn" style="width: 80%;">🏠 Volver a la Fiesta</a>
+          
+          <p class="blink" style="margin-top: 20px;">¡Más juegos próximamente!</p>
+          <div class="under-construction">
+            <img
+              src="https://media.tenor.com/EF-qPwkqZgEAAAAC/evil-laugh-muahaha.gif"
+              alt="Risa malvada"
+              width="100"
+              height="100"
+            />
+          </div>
+          <br>
+          <img src="https://badhtml.com/img/sidebar-uc.gif" alt="Construcción" />
+          
+          <div style="margin-top: 30px;">
+            <img src="https://www.gifsanimados.org/data/media/154/payaso-imagen-animada-0324.gif" alt="Payaso" />
+          </div>
+        </td>
+        <td>
+          <h2>🔥 Elige tu Veneno 🔥</h2>
+          <p class="blink" style="font-size: 22px; color: #ffff00;">¡Demuestra tus habilidades o págale una caguama al cumpleañero!</p>
+          
+          <!-- Contenedor expandible para los juegos -->
+          <div class="games-grid">
+            
+            <!-- Juego 1: Ardo Fight (Sans) -->
+            <div class="game-card">
+              <h3 class="game-title blink">💀 ARDO FIGHT 💀</h3>
+              <p class="game-desc">¡Esquiva como un campeón!</p>
+              
+              <!-- Iframe del juego de Sans/Ardo -->
+              <iframe 
+                src="./ardo_fight/index.html" 
+                width="400" 
+                height="300" 
+                scrolling="no">
+              </iframe>
+              
+              <a href="./ardo_fight/index.html" target="_blank" class="button play-btn">Jugar en Pantalla Completa</a>
+            </div>
+
+            <!-- Juego 2: Tetris -->
+            <div class="game-card" style="border-color: #00ff00;">
+              <h3 class="game-title">🧱 ARDO TETRIS 🧱</h3>
+              <p class="game-desc" style="color: #ff69b4;">¡Acomoda los bloques, no te trabes!</p>
+              
+              <!-- Iframe del Tetris (asegúrate de poner la ruta correcta a tu carpeta del tetris) -->
+              <iframe 
+                src="./ardtetris/index.html" 
+                width="400" 
+                height="300" 
+                scrolling="no">
+              </iframe>
+              
+              <a href="./ardtetris/index.html" target="_blank" class="button play-btn">Jugar en Pantalla Completa</a>
+            </div>
+
+            <!-- Plantilla para agregar más juegos a futuro -->
+            <div class="game-card" style="border-color: #ffa500; opacity: 0.8;">
+              <h3 class="game-title">❓ PRÓXIMAMENTE ❓</h3>
+              <p class="game-desc" style="color: #ffff00;">¿Qué otra joya pondremos aquí?</p>
+              
+              <div style="width: 400px; height: 300px; display: flex; justify-content: center; align-items: center; background: #111; margin: 0 auto; border: 4px solid #ffa500;">
+                <img src="https://img1.picmix.com/output/stamp/normal/5/7/8/1/2151875_4c25b.gif" alt="Misterio" />
+              </div>
+              
+              <button class="button play-btn" style="filter: grayscale(100%); cursor: not-allowed;">Bloqueado</button>
+            </div>
+
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="footer">
+          <p>© 1992-2025 Juegos de Aldo | <a href="index.html">Volver a la página principal</a></p>
+          <marquee>¡Si te ardes, pierdes! ¡Viva el Ardo!</marquee>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
