@@ -195,7 +195,7 @@
 
 <body>
   <div id="notification" class="notification" style="position: fixed; top: 20%; left: 50%; transform: translateX(-50%); background: linear-gradient(#ff0000, #ffff00); color: #00ff00; padding: 20px; border: 5px double #00ffff; font-size: 24px; text-shadow: 2px 2px 4px #ff00ff; z-index: 1000; display: none;"></div>
-  <audio id="clicker-bg-audio" autoplay loop>
+  <audio id="clicker-bg-audio" loop>
     <source src="ardocklicker.mp3" type="audio/mpeg" />
   </audio>
   <marquee>🔥 ARDO CLICKER 🔥 ¡Clickea a Aldo hasta el infinito y más allá! 🔥</marquee>
@@ -423,7 +423,14 @@
     });
 
     // ---------- Música de fondo ----------
+    // Detecta si el clicker está embebido dentro de un <iframe> (por ejemplo,
+    // en la Sala de Juegos). Si es así, NO reproduce su música para que no se
+    // encime con la música de esa página. Solo suena en pantalla completa.
+    const estaEnIframe = window.self !== window.top;
+
     window.addEventListener("load", () => {
+      if (estaEnIframe) return; // Embebido: silencio, la sala tiene su propia música.
+
       const audio = document.getElementById("clicker-bg-audio");
       const notification = document.getElementById("notification");
       const promise = audio.play();
