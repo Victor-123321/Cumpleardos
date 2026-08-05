@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bad Time Simulator</title>
+    <!-- Estilos básicos para centrar el juego y poner el fondo negro -->
+    <style>
+        body { 
+            background-color: black; 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden; 
+        }
+        #c2canvasdiv { 
+            width: 100vw; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        canvas { 
+            display: block; 
+        }
+    </style>
+</head>
+<body>
+    <div id="c2canvasdiv">
+        <!-- El canvas donde Construct 2 renderiza el juego -->
+        <canvas id="c2canvas" width="640" height="480">
+            Tu navegador no soporta HTML5 canvas.
+        </canvas>
+    </div>
+
+    <!-- 1. Cargar jQuery (archivo incluido en tu carpeta y requerido por el motor) -->
+    <script src="jquery-3.4.1.min.js"></script>
+
+    <!-- 2. Cargar el motor de Construct 2 -->
+    <script src="c2runtime.js"></script>
+
+    <!-- 3. Iniciar el juego -->
+    <script>
+        // Iniciar el motor cuando el documento esté listo
+        jQuery(document).ready(function () {
+            // Esta función busca el canvas por su ID y arranca el juego
+            cr_createRuntime("c2canvas");
+        });
+        
+        // Pausar y reanudar el motor de Construct 2 si cambias de pestaña
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                cr_setSuspended(true);
+            } else {
+                cr_setSuspended(false);
+            }
+        });
+    </script>
+</body>
+</html>
