@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=800" />
+  <title>👆 ARDO CLICKER 👆</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #000 url("https://www.toptal.com/designers/subtlepatterns/uploads/sparkle.png") repeat;
+      font-family: "Comic Sans MS", cursive;
+      color: #00ffff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 40px;
+      color: #ffff00;
+      text-shadow: 3px 3px 6px #ff0000;
+      margin: 15px 0 5px;
+    }
+
+    .blink {
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .subtitle {
+      color: #ff00ff;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .layout {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 10px 20px 40px;
+    }
+
+    .panel {
+      background: #111;
+      border: 4px dashed #ff00ff;
+      padding: 15px;
+      width: 340px;
+    }
+
+    .score-box {
+      font-size: 26px;
+      color: #00ff00;
+      text-shadow: 2px 2px #000;
+      margin-bottom: 5px;
+    }
+
+    .cps-box {
+      font-size: 16px;
+      color: #ffa500;
+      margin-bottom: 15px;
+    }
+
+    #ardoImg {
+      width: 260px;
+      height: 260px;
+      object-fit: cover;
+      border: 6px solid #ffff00;
+      border-radius: 50%;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.05s;
+      box-shadow: 0 0 25px #ff00ff;
+    }
+
+    #ardoImg:active {
+      transform: scale(0.9) rotate(-3deg);
+    }
+
+    .click-zone {
+      position: relative;
+    }
+
+    .floater {
+      position: absolute;
+      pointer-events: none;
+      font-size: 22px;
+      font-weight: bold;
+      color: #00ff00;
+      text-shadow: 1px 1px 2px #000;
+      animation: floatUp 0.9s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-70px);
+      }
+    }
+
+    .caption {
+      min-height: 24px;
+      color: #ff69b4;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .upgrade {
+      background: linear-gradient(#222, #000);
+      border: 3px solid #00ffff;
+      margin: 10px 0;
+      padding: 8px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .upgrade:hover:not(.disabled) {
+      border-color: #ffff00;
+      box-shadow: 0 0 10px #ffff00;
+    }
+
+    .upgrade.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .upgrade-name {
+      color: #ffff00;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .upgrade-desc {
+      color: #00ff00;
+      font-size: 13px;
+    }
+
+    .upgrade-stats {
+      color: #ff00ff;
+      font-size: 13px;
+    }
+
+    .count-badge {
+      float: right;
+      background: #ff0000;
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 8px;
+      font-size: 13px;
+    }
+
+    .nav {
+      margin-top: 15px;
+    }
+
+    .button {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 16px;
+      background: linear-gradient(#ff0000, #ffff00);
+      border: 3px solid #00ff00;
+      color: #00ffff;
+      text-decoration: none;
+      text-shadow: 2px 2px 4px #ff00ff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: rotate(-2deg);
+    }
+
+    marquee {
+      color: #ff00ff;
+      font-size: 20px;
+    }
+
+    c
+  </style>
+</head>
+
+<body>
+  <div id="notification" class="notification" style="position: fixed; top: 20%; left: 50%; transform: translateX(-50%); background: linear-gradient(#ff0000, #ffff00); color: #00ff00; padding: 20px; border: 5px double #00ffff; font-size: 24px; text-shadow: 2px 2px 4px #ff00ff; z-index: 1000; display: none;"></div>
+  <audio id="clicker-bg-audio" autoplay loop>
+    <source src="ardocklicker.mp3" type="audio/mpeg" />
+  </audio>
+  <marquee>🔥 ARDO CLICKER 🔥 ¡Clickea a Aldo hasta el infinito y más allá! 🔥</marquee>
+  <h1 class="blink">👆 ARDO CLICKER 👆</h1>
+  <p class="subtitle">Clickea al Ardo. Cómprale pendejadas. Repite hasta la iluminación.</p>
+
+  <div class="layout">
+    <div class="panel">
+      <div class="score-box">🪙 <span id="score">0</span> Alditos</div>
+      <div class="cps-box">+<span id="cps">0</span> Alditos/seg</div>
+
+      <div class="click-zone" id="clickZone">
+        <img id="ardoImg" src="../../Ardo/Ardo_base/aldopizarron.jpg" alt="Clickea a Aldo" />
+      </div>
+
+      <div class="caption" id="caption">¡Click en la cara del Ardo!</div>
+
+      <div class="nav">
+        <button class="button" onclick="resetGame()">🔄 Reiniciar</button>
+        <a href="../index.html" class="button">🏠 Volver a la Sala de Juegos</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 style="color:#ffff00;">🛒 Mejoras del Ardo</h2>
+      <div id="upgrades"></div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Config ----------
+    const UPGRADES = [
+      {
+        id: "bici",
+        name: "🚲 Bici",
+        desc: "Para que Ardo llegue en verguiza a todos lados (menos a la escuela).",
+        baseCost: 15,
+        cps: 0.2,
+      },
+      {
+        id: "depa",
+        name: "🏠 Departamento de Mia",
+        desc: "Pinche Ardo prácticamente ya vive ahí.",
+        baseCost: 120,
+        cps: 1.5,
+      },
+      {
+        id: "marlboro",
+        name: "🚬 Marlboro Rojo",
+        desc: "Casi tan ardidos como el Ardo.",
+        baseCost: 600,
+        cps: 7,
+      },
+      {
+        id: "closet",
+        name: "🌈 Salir del Closet",
+        desc: "La mejor decisión de su vida. Alditos ilimitados de autenticidad.",
+        baseCost: 3000,
+        cps: 30,
+      },
+    ];
+
+    const CAPTIONS = [
+      "¡SE ARDIÓ!",
+      "Alv no papu",
+      "Pícame la verga mejor",
+      "Ardo siente cada click.",
+      "1 click = 1 metida de pene",
+      "fiado - saligod",
+      "El Ardo no se cansa (todavía).",
+      "andale y retacatacataca la petacatacataca que se atacatacataca tu papa",
+      "3 likes y el victor se folla al diego",
+      "pendejo verga idiota",
+      "67",
+    ];
+
+    const SAVE_KEY = "ardoClickerSave_v1";
+
+    // ---------- State ----------
+    let state = {
+      score: 0,
+      owned: {},
+    };
+    UPGRADES.forEach((u) => (state.owned[u.id] = 0));
+
+    function load() {
+      try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          state.score = parsed.score || 0;
+          UPGRADES.forEach((u) => (state.owned[u.id] = (parsed.owned && parsed.owned[u.id]) || 0));
+        }
+      } catch (e) {
+        console.warn("No se pudo cargar el save", e);
+      }
+    }
+
+    function save() {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+    }
+
+    function resetGame() {
+      if (!confirm("¿Seguro que quieres reiniciar todo el progreso del Ardo Clicker?")) return;
+      state.score = 0;
+      UPGRADES.forEach((u) => (state.owned[u.id] = 0));
+      save();
+      renderAll();
+    }
+
+    // ---------- Derived values ----------
+    function upgradeCost(u) {
+      const owned = state.owned[u.id];
+      return Math.ceil(u.baseCost * Math.pow(1.15, owned));
+    }
+
+    function totalCps() {
+      return UPGRADES.reduce((sum, u) => sum + u.cps * state.owned[u.id], 0);
+    }
+
+    // ---------- Actions ----------
+    function clickArdo(evt) {
+      state.score += 1;
+      spawnFloater(evt, "+1");
+      showCaption(CAPTIONS[Math.floor(Math.random() * CAPTIONS.length)]);
+      renderScore();
+      save();
+    }
+
+    function buyUpgrade(id) {
+      const u = UPGRADES.find((x) => x.id === id);
+      const cost = upgradeCost(u);
+      if (state.score < cost) {
+        showCaption("¡No tienes suficientes Alditos, ábrete!");
+        return;
+      }
+      state.score -= cost;
+      state.owned[id] += 1;
+      showCaption(`¡Compraste ${u.name}! Ardo está orgulloso.`);
+      save();
+      renderAll();
+    }
+
+    // ---------- Rendering ----------
+    function spawnFloater(evt, text) {
+      const zone = document.getElementById("clickZone");
+      const rect = zone.getBoundingClientRect();
+      const f = document.createElement("div");
+      f.className = "floater";
+      f.textContent = text;
+      const x = (evt && evt.offsetX) || rect.width / 2;
+      const y = (evt && evt.offsetY) || rect.height / 2;
+      f.style.left = x + "px";
+      f.style.top = y + "px";
+      zone.appendChild(f);
+      setTimeout(() => f.remove(), 900);
+    }
+
+    let captionTimer = null;
+    function showCaption(text) {
+      const el = document.getElementById("caption");
+      el.textContent = text;
+      clearTimeout(captionTimer);
+      captionTimer = setTimeout(() => {
+        el.textContent = "¡Sigue clickeando al Ardo!";
+      }, 1800);
+    }
+
+    function renderScore() {
+      document.getElementById("score").textContent = Math.floor(state.score).toLocaleString();
+      document.getElementById("cps").textContent = totalCps().toLocaleString();
+    }
+
+    function renderUpgrades() {
+      const container = document.getElementById("upgrades");
+      container.innerHTML = "";
+      UPGRADES.forEach((u) => {
+        const cost = upgradeCost(u);
+        const owned = state.owned[u.id];
+        const canAfford = state.score >= cost;
+        const div = document.createElement("div");
+        div.className = "upgrade" + (canAfford ? "" : " disabled");
+        div.onclick = () => buyUpgrade(u.id);
+        div.innerHTML = `
+            <span class="count-badge">${owned}</span>
+            <div class="upgrade-name">${u.name}</div>
+            <div class="upgrade-desc">${u.desc}</div>
+            <div class="upgrade-stats">Costo: ${cost.toLocaleString()} Alditos | +${u.cps}/seg cada una</div>
+          `;
+        container.appendChild(div);
+      });
+    }
+
+    function renderAll() {
+      renderScore();
+      renderUpgrades();
+    }
+
+    // ---------- Game loop ----------
+    let lastTick = performance.now();
+    function tick(now) {
+      const dt = (now - lastTick) / 1000;
+      lastTick = now;
+      const cps = totalCps();
+      if (cps > 0) {
+        state.score += cps * dt;
+        renderScore();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // Autosave every 5s so idle progress doesn't get lost
+    setInterval(() => {
+      renderUpgrades();
+      save();
+    }, 5000);
+
+    // ---------- Init ----------
+    load();
+    renderAll();
+    document.getElementById("ardoImg").addEventListener("click", clickArdo);
+    requestAnimationFrame((t) => {
+      lastTick = t;
+      requestAnimationFrame(tick);
+    });
+
+    // ---------- Música de fondo ----------
+    window.addEventListener("load", () => {
+      const audio = document.getElementById("clicker-bg-audio");
+      const notification = document.getElementById("notification");
+      const promise = audio.play();
+      if (promise !== undefined) {
+        promise.catch(() => {
+          if (notification) {
+            notification.textContent = "Haz clic en la página para iniciar el sonido.";
+            notification.style.display = "block";
+            setTimeout(() => {
+              notification.style.display = "none";
+            }, 5000);
+          }
+          document.addEventListener(
+            "click",
+            () => {
+              audio.play().catch(() => {});
+            },
+            { once: true }
+          );
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

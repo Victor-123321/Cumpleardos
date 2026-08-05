@@ -249,6 +249,95 @@ function showPluginMessage() {
   }, 3000);
 }
 
+// ---------- Confeti cayendo sin parar ----------
+(function setupConfetti() {
+  const canvas = document.getElementById("confettiCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const colors = ["#ff00ff", "#00ffff", "#ffff00", "#00ff00", "#ff0000", "#ffa500"];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  const pieces = Array.from({ length: 90 }, () => makePiece());
+
+  function makePiece() {
+    return {
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * -window.innerHeight,
+      size: 6 + Math.random() * 8,
+      speed: 1 + Math.random() * 3,
+      drift: -1 + Math.random() * 2,
+      angle: Math.random() * 360,
+      spin: -6 + Math.random() * 12,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    };
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach((p) => {
+      p.y += p.speed;
+      p.x += p.drift;
+      p.angle += p.spin;
+      if (p.y > canvas.height + 20) {
+        Object.assign(p, makePiece(), { y: -20 });
+      }
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.angle * Math.PI) / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+      ctx.restore();
+    });
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+// ---------- Trail de estrellitas siguiendo al mouse ----------
+(function setupCursorTrail() {
+  const emojis = ["✨", "🎉", "🔥", "🥵", "🎂", "💀"];
+  let lastSpawn = 0;
+  document.addEventListener("mousemove", (e) => {
+    const now = performance.now();
+    if (now - lastSpawn < 60) return; // limitar frecuencia
+    lastSpawn = now;
+    const el = document.createElement("span");
+    el.className = "cursor-trail";
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = e.clientX + "px";
+    el.style.top = e.clientY + "px";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 800);
+  });
+})();
+
+// ---------- Sonidos random al clickear por la página ----------
+(function setupRandomClickSounds() {
+  const clips = [
+    "Videos/hola.mp4",
+    "Videos/cum.mp4",
+    "Videos/maau.mp4",
+    "Videos/aldo.mp4",
+  ];
+  document.addEventListener("click", (e) => {
+    // Evita interrumpir el textarea de mensajes y no siempre sonar (chance baja)
+    if (e.target.closest("#message")) return;
+    if (Math.random() > 0.2) return; // ~20% de probabilidad por click
+    const clip = clips[Math.floor(Math.random() * clips.length)];
+    const sfx = document.createElement("audio");
+    sfx.src = clip;
+    sfx.volume = 0.6;
+    sfx.play().catch(() => {});
+    sfx.addEventListener("ended", () => sfx.remove());
+  });
+})();
+
 function switchDesign() {
   document.body.style.background = "white";
   document.body.style.color = "black";

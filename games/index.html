@@ -44,6 +44,10 @@
     </style>
   </head>
   <body>
+    <div id="notification" class="notification"></div>
+    <audio id="games-bg-audio" autoplay loop>
+      <source src="../Flor de capomo low quality.mp3" type="audio/mpeg" />
+    </audio>
     <table>
       <tr>
         <td colspan="2" class="header">
@@ -111,15 +115,30 @@
               <a href="./ardtetris/index.html" target="_blank" class="button play-btn">Jugar en Pantalla Completa</a>
             </div>
 
+            <!-- Juego 3: Ardo Clicker -->
+            <div class="game-card" style="border-color: #ffff00;">
+              <h3 class="game-title">👆 ARDO CLICKER 👆</h3>
+              <p class="game-desc" style="color: #ffa500;">¡Clickea al Ardo y cómprale pendejadas!</p>
+
+              <iframe
+                src="./ardo_clicker/index.html"
+                width="400"
+                height="300"
+                scrolling="no">
+              </iframe>
+
+              <a href="./ardo_clicker/index.html" target="_blank" class="button play-btn">Jugar en Pantalla Completa</a>
+            </div>
+
             <!-- Plantilla para agregar más juegos a futuro -->
             <div class="game-card" style="border-color: #ffa500; opacity: 0.8;">
               <h3 class="game-title">❓ PRÓXIMAMENTE ❓</h3>
               <p class="game-desc" style="color: #ffff00;">¿Qué otra joya pondremos aquí?</p>
-              
+
               <div style="width: 400px; height: 300px; display: flex; justify-content: center; align-items: center; background: #111; margin: 0 auto; border: 4px solid #ffa500;">
                 <img src="https://img1.picmix.com/output/stamp/normal/5/7/8/1/2151875_4c25b.gif" alt="Misterio" />
               </div>
-              
+
               <button class="button play-btn" style="filter: grayscale(100%); cursor: not-allowed;">Bloqueado</button>
             </div>
 
@@ -133,5 +152,30 @@
         </td>
       </tr>
     </table>
+    <script>
+      window.addEventListener("load", () => {
+        const audio = document.getElementById("games-bg-audio");
+        const notification = document.getElementById("notification");
+        const promise = audio.play();
+        if (promise !== undefined) {
+          promise.catch(() => {
+            if (notification) {
+              notification.textContent = "Haz clic en la página para iniciar el sonido.";
+              notification.style.display = "block";
+              setTimeout(() => {
+                notification.style.display = "none";
+              }, 5000);
+            }
+            document.addEventListener(
+              "click",
+              () => {
+                audio.play().catch(() => {});
+              },
+              { once: true }
+            );
+          });
+        }
+      });
+    </script>
   </body>
 </html>
