@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>🚲 ARDO BIKE 🚲</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body {
+        width: 100%; height: 100%; overflow: hidden; background: #000;
+        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", cursive;
+        -webkit-user-select: none; user-select: none; touch-action: none;
+      }
+      body {
+        display: flex; flex-direction: column;
+        background: radial-gradient(circle at 20% 10%, #1a2733 0%, #000 60%), #000;
+        background-size: cover; background-position: center;
+      }
+      .topbar {
+        flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+        gap: 6px; padding: 4px 8px; border-bottom: 3px dashed #ff00ff; min-height: 30px;
+        background: rgba(0,0,0,0.55);
+      }
+      .logo {
+        color: #00ffff; font-size: clamp(13px, 4.2vw, 22px); font-weight: bold;
+        text-shadow: 2px 2px #ff0000, 0 0 8px #00ffff; white-space: nowrap;
+      }
+      .right { display: flex; align-items: center; gap: 8px; }
+      .scores { display: flex; gap: 10px; font-size: clamp(11px, 3vw, 16px); white-space: nowrap; }
+      .scores b { color: #00ff00; text-shadow: 0 0 6px #00ff00; }
+      .scores i { color: #ffff00; font-style: normal; text-shadow: 0 0 6px #ffff00; }
+      .music-btn, .home-btn {
+        font-family: inherit; font-size: 16px; background: #ff00ff; color: #fff;
+        border: 2px solid #00ffff; border-radius: 6px; padding: 2px 6px; cursor: pointer;
+        text-decoration: none; line-height: 1.2;
+      }
+      .home-btn { background: #00ff00; color: #000; }
+      .stage {
+        flex: 1 1 auto; position: relative; display: flex; align-items: center;
+        justify-content: center; overflow: hidden; min-height: 0;
+      }
+      canvas {
+        display: block; border: 4px solid #ffff00; background: #cdd6dc;
+        box-shadow: 0 0 14px #ff00ff, inset 0 0 20px rgba(0,0,0,.12);
+      }
+      .overlay {
+        position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 8px; text-align: center;
+        padding: 12px; background: rgba(0, 0, 0, 0.72); z-index: 5;
+      }
+      .overlay.hidden { display: none; }
+      .overlay h2 {
+        font-size: clamp(20px, 7vw, 40px); color: #ff00ff;
+        text-shadow: 2px 2px #00ffff, 0 0 12px #ff00ff; line-height: 1.1;
+      }
+      .overlay p { font-size: clamp(12px, 3.6vw, 18px); color: #00ff00; max-width: 90%; }
+      .overlay .big { font-size: clamp(15px, 4.5vw, 22px); color: #ffff00; text-shadow: 0 0 8px #ffff00; }
+      .lose-img {
+        max-width: 55%; max-height: 38%; object-fit: contain;
+        border: 4px dashed #ffff00; border-radius: 8px; box-shadow: 0 0 12px #ff00ff; background: #000;
+      }
+      .btn {
+        margin-top: 4px; padding: 8px 18px; font-family: inherit;
+        font-size: clamp(13px, 4vw, 20px); font-weight: bold; color: #000;
+        background: #00ff00; border: 4px outset #00ffff; cursor: pointer; text-shadow: 1px 1px #fff;
+      }
+      .btn:active { border-style: inset; }
+      .btn.pink { background: #ff00ff; color: #fff; }
+      .keys { font-size: clamp(10px, 3vw, 14px); color: #ff69b4; margin-top: 2px; }
+      .back-link {
+        margin-top: 4px; color: #00ffff; font-size: clamp(11px, 3.2vw, 16px);
+        text-decoration: none; border-bottom: 2px dotted #00ffff; text-shadow: 0 0 6px #00ffff;
+      }
+      .back-link:active { color: #ffff00; border-color: #ffff00; }
+      .blink { animation: blink 0.7s steps(1) infinite; }
+      @keyframes blink { 50% { opacity: 0; } }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <a id="homeBtn" class="home-btn" target="_top" title="Volver a los juegos">🏠</a>
+      <span class="logo blink">🚲 ARDO BIKE 🚲</span>
+      <div class="right">
+        <span class="scores">
+          <span>SCORE: <b id="score">0</b></span>
+          <span>MEJOR: <i id="best">0</i></span>
+        </span>
+        <button class="music-btn" id="musicBtn" title="Música">🔊</button>
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+      <canvas id="game" width="800" height="600"></canvas>
+
+      <div class="overlay" id="startScreen">
+        <h2 class="blink">🚲 ARDO<br />BIKE 🚲</h2>
+        <p class="big">¡que no te lleve la chingada!</p>
+        <p class="keys">brincale con espacio puta</p>
+        <button class="btn" id="startBtn">▶ atorale!</button>
+        <a class="back-link" id="backStart" target="_top">⬅ Volver a los juegos</a>
+      </div>
+
+      <div class="overlay hidden" id="overScreen">
+        <h2 id="overTitle" class="blink">💥 ¡TE ARDISTE! 💥</h2>
+        <img id="loseImg" class="lose-img" alt="" style="display:none" />
+        <p class="big">Juntaste <b id="finalScore">0</b> cigarros</p>
+        <p class="keys" id="bestMsg"></p>
+        <button class="btn pink" id="retryBtn">🔁 OTRA VEZ</button>
+        <a class="back-link" id="backOver" target="_top">⬅ Volver a los juegos</a>
+      </div>
+    </div>
+
+    <audio id="bgm" loop preload="auto"></audio>
+    <audio id="loseSfx" loop preload="auto"></audio>
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* =======================================================
+           ⚙️  CONFIGURACIÓN  ⚙️  (rutas con "/" al inicio)
+           ======================================================= */
+        var CONFIG = {
+          // Imagen que rueda (tu bici/personaje). "" = dibujo por defecto:
+          SPRITE:     "/games/ardo_bike/bici.png",
+          // ¿Dibujar patineta debajo? (para bici déjalo en false):
+          SHOW_BOARD: false,
+          // Fondo del cielo. "" = calle dibujada:
+          BG_IMAGE:   "",   // ej: "/games/ardo_bike/cielo.png"
+          // Imagen de lo que se recoge (cigarros). "" = cigarro dibujado:
+          COIN:       "",   // ej: "/games/ardo_bike/cigarro.png"
+          // Música de fondo mientras juegas:
+          MUSIC:      "/games/ardo_bike/musica.mp3",
+          // >>> AL PERDER <<<
+          LOSE_IMAGE: "/games/ardo_bike/over.jpeg",
+          LOSE_MUSIC: "/games/ardo_bike/ayay.mp3",
+          // Botón "Volver a los juegos":
+          MENU_URL:   "../index.html"
+        };
+        /* ======================================================= */
+
+        var canvas = document.getElementById("game");
+        var ctx = canvas.getContext("2d");
+        var stage = document.getElementById("stage");
+        var W = canvas.width, H = canvas.height;
+
+        var scoreEl = document.getElementById("score");
+        var bestEl = document.getElementById("best");
+        var startScreen = document.getElementById("startScreen");
+        var overScreen = document.getElementById("overScreen");
+        var overTitle = document.getElementById("overTitle");
+        var finalScoreEl = document.getElementById("finalScore");
+        var bestMsg = document.getElementById("bestMsg");
+        var musicBtn = document.getElementById("musicBtn");
+        var bgm = document.getElementById("bgm");
+        var loseSfx = document.getElementById("loseSfx");
+        var loseImg = document.getElementById("loseImg");
+
+        var MENU = CONFIG.MENU_URL || "../index.html";
+        ["homeBtn", "backStart", "backOver"].forEach(function (id) {
+          var el = document.getElementById(id); if (el) el.setAttribute("href", MENU);
+        });
+
+        function loadImg(src) {
+          var im = { img: new Image(), ready: false };
+          im.img.onload = function () { im.ready = true; };
+          im.img.onerror = function () { im.ready = false; };
+          if (src) im.img.src = src;
+          return im;
+        }
+        var sprite = loadImg(CONFIG.SPRITE);
+        var bg = loadImg(CONFIG.BG_IMAGE);
+        var coinImg = loadImg(CONFIG.COIN);
+        if (CONFIG.BG_IMAGE) {
+          document.body.style.background = "#000 url('" + CONFIG.BG_IMAGE + "') center / cover no-repeat fixed";
+        }
+        if (CONFIG.LOSE_IMAGE) { loseImg.src = CONFIG.LOSE_IMAGE; loseImg.style.display = ""; }
+
+        // ---------- Audio ----------
+        var musicOn = true;
+        if (CONFIG.MUSIC) { bgm.src = CONFIG.MUSIC; bgm.volume = 0.5; }
+        if (CONFIG.LOSE_MUSIC) { loseSfx.src = CONFIG.LOSE_MUSIC; loseSfx.volume = 0.7; }
+        musicBtn.style.display = (CONFIG.MUSIC || CONFIG.LOSE_MUSIC) ? "" : "none";
+        function tryPlayMusic() { if (!CONFIG.MUSIC || !musicOn) return; var p = bgm.play(); if (p && p.catch) p.catch(function(){}); }
+        function playLoseMusic() { if (!CONFIG.LOSE_MUSIC || !musicOn) return; try { loseSfx.currentTime = 0; } catch(e){} var p = loseSfx.play(); if (p && p.catch) p.catch(function(){}); }
+        function stopLoseMusic() { try { loseSfx.pause(); loseSfx.currentTime = 0; } catch(e){} }
+        musicBtn.addEventListener("click", function () {
+          musicOn = !musicOn;
+          if (musicOn) { musicBtn.textContent = "🔊"; if (state === "over") playLoseMusic(); else tryPlayMusic(); }
+          else { musicBtn.textContent = "🔇"; try { bgm.pause(); } catch(e){} stopLoseMusic(); }
+        });
+
+        var AC = null;
+        function beep(freq, dur, type) {
+          try {
+            if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+            if (AC.state === "suspended") AC.resume();
+            var o = AC.createOscillator(), g = AC.createGain();
+            o.type = type || "square"; o.frequency.value = freq; g.gain.value = 0.05;
+            o.connect(g); g.connect(AC.destination); o.start();
+            g.gain.exponentialRampToValueAtTime(0.0001, AC.currentTime + (dur || 0.08));
+            o.stop(AC.currentTime + (dur || 0.08));
+          } catch (e) {}
+        }
+
+        // ---------- Mundo ----------
+        var GROUND_Y = 440;              // superficie de la calle
+        var PX = 185, PW = 96, PH = 96;
+        var GRAV = 2500, JUMP_V = -900, MAX_JUMPS = 2;
+        var FAR_PAR = 0.30, NEAR_PAR = 0.55, CLOUD_PAR = 0.15;
+
+        var state, scroll, speed, player, platforms, coins, genX, far, near, clouds, score, best;
+
+        best = (function () { try { return parseInt(localStorage.getItem("ardoBikeBest") || "0", 10) || 0; } catch (e) { return 0; } })();
+        bestEl.textContent = best;
+
+        var OVER_MSGS = ["💥 ¡TE ARDISTE! 💥", "🕳️ ¡AL BACHE! 🕳️", "😤 ¡NO TE ARDAS!", "🚲 ¡SE PONCHÓ! 🚲"];
+        var FAR_TONES = ["#c7ced1", "#b8c0c4", "#d5dadc", "#eef1f2", "#adb6ba"];
+
+        // ---------- Generación ----------
+        function makeRoadDecos(w) {
+          var d = [], count = 1 + (Math.random() * 2 | 0);
+          for (var i = 0; i < count; i++) {
+            var t = ["manhole", "arrow", "patch", "crosswalk"][Math.random() * 4 | 0];
+            d.push({ t: t, x: 40 + Math.random() * (w - 80) });
+          }
+          return d;
+        }
+
+        function genWorld() {
+          // calle (plana, con baches entre segmentos)
+          while (genX < scroll + W + 600) {
+            var gap = 110 + Math.random() * (50 + Math.min(120, scroll * 0.02));
+            gap = Math.min(gap, 190);
+            var x0 = genX + gap, w = 260 + Math.random() * 280, x1 = x0 + w;
+            platforms.push({ x0: x0, x1: x1, decos: makeRoadDecos(w) });
+            // cigarros en arco sobre el bache
+            for (var k = 0; k < 3; k++) {
+              var t = (k + 1) / 4;
+              coins.push({ x: genX + gap * t, y: GROUND_Y - 60 - Math.sin(t * Math.PI) * 70, got: false });
+            }
+            // cigarros sobre el asfalto
+            var n = 1 + (Math.random() * 2 | 0);
+            for (var j = 0; j < n; j++) coins.push({ x: x0 + 50 + Math.random() * (w - 100), y: GROUND_Y - 55, got: false });
+            genX = x1;
+          }
+          // edificios (fondo lejano)
+          var limF = scroll * FAR_PAR + W + 300;
+          while (far.genX < limF) {
+            far.items.push({ wx: far.genX, w: 90 + Math.random() * 150, h: 90 + Math.random() * 150, tone: FAR_TONES[Math.random() * FAR_TONES.length | 0] });
+            far.genX += 100 + Math.random() * 70;
+          }
+          // árboles / postes / letreros (fondo cercano)
+          var limN = scroll * NEAR_PAR + W + 300;
+          while (near.genX < limN) {
+            var r = Math.random();
+            var kind = r < 0.5 ? "tree" : r < 0.72 ? "pole" : r < 0.86 ? "bush" : "sign";
+            near.items.push({ wx: near.genX, t: kind });
+            near.genX += 80 + Math.random() * 130;
+          }
+          // limpieza
+          platforms = platforms.filter(function (p) { return p.x1 > scroll - 200; });
+          coins = coins.filter(function (c) { return !c.got && c.x > scroll - 100; });
+          far.items = far.items.filter(function (b) { return b.wx - scroll * FAR_PAR + b.w > -60; });
+          near.items = near.items.filter(function (it) { return it.wx - scroll * NEAR_PAR > -120; });
+        }
+
+        function reset() {
+          scroll = 0; speed = 300; score = 0; scoreEl.textContent = "0";
+          player = { feetY: GROUND_Y, vy: 0, jumps: MAX_JUMPS, grounded: true, rot: 0 };
+          platforms = [{ x0: -500, x1: 1000, decos: [] }];
+          coins = []; genX = 1000;
+          far = { items: [], genX: 0 }; near = { items: [], genX: 0 };
+          clouds = [];
+          for (var i = 0; i < 4; i++) clouds.push({ x: i * 300 + 100, y: 40 + Math.random() * 120, s: 60 + Math.random() * 45 });
+          genWorld();
+        }
+
+        function startGame() {
+          stopLoseMusic(); reset(); state = "playing";
+          startScreen.classList.add("hidden"); overScreen.classList.add("hidden");
+          tryPlayMusic(); beep(660, 0.09);
+        }
+        function gameOver() {
+          state = "over";
+          if (score > best) { best = score; try { localStorage.setItem("ardoBikeBest", String(best)); } catch(e){} bestEl.textContent = best; }
+          overTitle.textContent = OVER_MSGS[(Math.random() * OVER_MSGS.length) | 0];
+          finalScoreEl.textContent = score;
+          bestMsg.textContent = (score >= best && score > 0) ? "¡NUEVO RÉCORD! 🎉" : "Récord a batir: " + best;
+          overScreen.classList.remove("hidden");
+          try { bgm.pause(); } catch(e){} playLoseMusic();
+          beep(180, 0.25, "sawtooth"); setTimeout(function () { beep(120, 0.3, "sawtooth"); }, 120);
+        }
+
+        // ---------- Entrada ----------
+        function jump() {
+          if (state !== "playing") { startGame(); return; }
+          if (player.jumps > 0) { player.vy = JUMP_V; player.jumps--; player.grounded = false; beep(720, 0.06); }
+        }
+        window.addEventListener("keydown", function (e) {
+          if (e.key === " " || e.key === "ArrowUp" || e.key === "w" || e.key === "W") { e.preventDefault(); jump(); }
+          else if (e.key === "Enter") { e.preventDefault(); if (state !== "playing") startGame(); }
+        });
+        stage.addEventListener("pointerdown", function (e) { if (e.target.closest("a,button")) return; jump(); });
+        document.getElementById("startBtn").addEventListener("click", function (e) { e.stopPropagation(); startGame(); });
+        document.getElementById("retryBtn").addEventListener("click", function (e) { e.stopPropagation(); startGame(); });
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden && state === "playing") state = "paused";
+          else if (!document.hidden && state === "paused") { state = "playing"; lastTime = 0; }
+        });
+
+        // ---------- Física ----------
+        function update(dt) {
+          scroll += speed * dt;
+          speed = Math.min(560, speed + 7 * dt);
+          genWorld();
+
+          var pwx = scroll + PX, onPlat = false;
+          for (var i = 0; i < platforms.length; i++) { if (pwx >= platforms[i].x0 && pwx <= platforms[i].x1) { onPlat = true; break; } }
+
+          var prevFeet = player.feetY;
+          player.vy += GRAV * dt; player.feetY += player.vy * dt; player.grounded = false;
+          // solo aterriza si venía desde ARRIBA de la calle (si ya se hundió en el bache, se sigue cayendo)
+          if (onPlat && player.vy >= 0 && prevFeet <= GROUND_Y + 12 && player.feetY >= GROUND_Y) {
+            player.feetY = GROUND_Y; player.vy = 0; player.grounded = true; player.jumps = MAX_JUMPS;
+          }
+          if (player.feetY - PH > H) { gameOver(); return; }
+          player.rot = Math.max(-0.28, Math.min(0.42, player.vy * 0.00045));
+
+          var cx = PX, cy = player.feetY - PH * 0.52, rr = (PW * 0.42 + 14) * (PW * 0.42 + 14);
+          for (var m = 0; m < coins.length; m++) {
+            var c = coins[m]; if (c.got) continue;
+            var sx = c.x - scroll, dx = sx - cx, dy = c.y - cy;
+            if (dx * dx + dy * dy < rr) { c.got = true; score++; scoreEl.textContent = score; beep(760 + (score % 6) * 30, 0.05); }
+          }
+        }
+
+        // ---------- Helpers de dibujo ----------
+        function roundRect(x, y, w, h, r) {
+          ctx.beginPath(); ctx.moveTo(x + r, y);
+          ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+          ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+        }
+        function drawCover(im, dx, dy, dw, dh) {
+          var iw = im.width, ih = im.height; if (!iw || !ih) return;
+          var s = Math.max(dw / iw, dh / ih), w = iw * s, h = ih * s;
+          ctx.drawImage(im, dx + (dw - w) / 2, dy + (dh - h) / 2, w, h);
+        }
+
+        // ---------- Fondo: cielo, edificios, camellón, árboles/postes ----------
+        function drawSky() {
+          if (bg.ready) { drawCover(bg.img, 0, 0, W, H); return; }
+          var g = ctx.createLinearGradient(0, 0, 0, H * 0.7);
+          g.addColorStop(0, "#b7c2ca"); g.addColorStop(1, "#dde4e8");
+          ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+          ctx.fillStyle = "rgba(246,248,249,0.75)";
+          for (var i = 0; i < clouds.length; i++) {
+            var cl = clouds[i];
+            var x = ((cl.x - scroll * CLOUD_PAR) % (W + 360)); if (x < -180) x += (W + 360);
+            var y = cl.y, r = cl.s;
+            ctx.beginPath();
+            ctx.ellipse(x, y, r, r * 0.55, 0, 0, 7);
+            ctx.ellipse(x + r * 0.8, y + 6, r * 0.7, r * 0.45, 0, 0, 7);
+            ctx.ellipse(x - r * 0.8, y + 6, r * 0.7, r * 0.45, 0, 0, 7);
+            ctx.fill();
+          }
+        }
+
+        function drawFar() {
+          if (bg.ready) return;
+          for (var i = 0; i < far.items.length; i++) {
+            var b = far.items[i], sx = b.wx - scroll * FAR_PAR;
+            if (sx > W || sx + b.w < 0) continue;
+            var bottom = 406, top = bottom - b.h;
+            ctx.fillStyle = b.tone; ctx.fillRect(sx, top, b.w, b.h);
+            ctx.fillStyle = "rgba(0,0,0,0.08)"; ctx.fillRect(sx, top, b.w, 5);
+            ctx.fillStyle = "rgba(120,132,138,0.55)";
+            for (var yy = top + 16; yy < bottom - 14; yy += 26)
+              for (var xx = sx + 10; xx < sx + b.w - 14; xx += 22)
+                ctx.fillRect(xx, yy, 13, 15);
+          }
+        }
+
+        function drawRoadside() {
+          // camellón / pasto
+          ctx.fillStyle = "#7fa85d"; ctx.fillRect(0, 402, W, 30);
+          ctx.fillStyle = "#6d9650"; ctx.fillRect(0, 426, W, 6);
+          // guarnición / banqueta
+          ctx.fillStyle = "#b9bec0"; ctx.fillRect(0, 430, W, 10);
+          ctx.fillStyle = "#d7b23a"; ctx.fillRect(0, 437, W, 3); // línea amarilla
+        }
+
+        function drawTree(x, base) {
+          ctx.fillStyle = "#6b4f36"; ctx.fillRect(x - 4, base - 32, 8, 32);
+          ctx.fillStyle = "#5f8a4e";
+          ctx.beginPath();
+          ctx.arc(x, base - 44, 20, 0, 7); ctx.arc(x - 16, base - 36, 15, 0, 7);
+          ctx.arc(x + 16, base - 36, 15, 0, 7); ctx.arc(x, base - 28, 16, 0, 7); ctx.fill();
+          ctx.fillStyle = "#6f9c5a"; ctx.beginPath(); ctx.arc(x - 6, base - 48, 11, 0, 7); ctx.fill();
+        }
+        function drawPole(x, base) {
+          ctx.strokeStyle = "#8b9094"; ctx.lineWidth = 5;
+          ctx.beginPath(); ctx.moveTo(x, base); ctx.lineTo(x, 208); ctx.stroke();
+          ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.moveTo(x - 16, 224); ctx.lineTo(x + 16, 224); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(x - 13, 234); ctx.lineTo(x + 13, 234); ctx.stroke();
+        }
+        function drawGreenSign(x, base) {
+          ctx.strokeStyle = "#7d8285"; ctx.lineWidth = 5;
+          ctx.beginPath(); ctx.moveTo(x - 34, base); ctx.lineTo(x - 34, 270); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(x + 34, base); ctx.lineTo(x + 34, 270); ctx.stroke();
+          ctx.fillStyle = "#1f7a3a"; ctx.strokeStyle = "#0f5024"; ctx.lineWidth = 3;
+          roundRect(x - 58, 230, 116, 42, 5); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = "#eef6ef";
+          ctx.fillRect(x - 48, 240, 72, 5); ctx.fillRect(x - 48, 253, 60, 5);
+          ctx.beginPath(); ctx.moveTo(x + 44, 236); ctx.lineTo(x + 44, 266); ctx.lineTo(x + 33, 251); ctx.closePath(); ctx.fill();
+        }
+        function drawNear() {
+          if (bg.ready) return;
+          var poles = [];
+          for (var i = 0; i < near.items.length; i++) {
+            var it = near.items[i], sx = it.wx - scroll * NEAR_PAR;
+            if (sx < -90 || sx > W + 90) continue;
+            var base = 424;
+            if (it.t === "tree") drawTree(sx, base);
+            else if (it.t === "bush") {
+              ctx.fillStyle = "#5f8a4e";
+              ctx.beginPath(); ctx.arc(sx, base - 8, 12, 0, 7); ctx.arc(sx + 12, base - 4, 10, 0, 7); ctx.arc(sx - 12, base - 4, 10, 0, 7); ctx.fill();
+            } else if (it.t === "pole") { drawPole(sx, base); poles.push(sx); }
+            else if (it.t === "sign") drawGreenSign(sx, base);
+          }
+          // cables entre postes
+          ctx.strokeStyle = "rgba(40,44,47,0.65)"; ctx.lineWidth = 1.5;
+          for (var p = 0; p < poles.length - 1; p++) {
+            var a = poles[p], b2 = poles[p + 1];
+            if (b2 - a > 360) continue;
+            for (var off = 0; off <= 10; off += 10) {
+              ctx.beginPath();
+              ctx.moveTo(a, 224 + off);
+              ctx.quadraticCurveTo((a + b2) / 2, 224 + off + 16, b2, 224 + off);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // ---------- Calle: base (baches), asfalto, marcas, conos ----------
+        function drawRoadDeco(dd, sx) {
+          var x = sx + dd.x;
+          if (dd.t === "manhole") {
+            ctx.fillStyle = "#3d4043"; ctx.beginPath(); ctx.ellipse(x, GROUND_Y + 78, 16, 7, 0, 0, 7); ctx.fill();
+            ctx.strokeStyle = "#26282a"; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(x, GROUND_Y + 78, 11, 4.5, 0, 0, 7); ctx.stroke();
+          } else if (dd.t === "patch") {
+            ctx.fillStyle = "rgba(38,40,42,0.5)"; roundRect(x - 32, GROUND_Y + 44, 64, 44, 6); ctx.fill();
+          } else if (dd.t === "arrow") {
+            ctx.fillStyle = "rgba(232,234,226,0.82)";
+            ctx.save(); ctx.translate(x, GROUND_Y + 104);
+            ctx.beginPath();
+            ctx.moveTo(-20, 0); ctx.lineTo(4, -10); ctx.lineTo(4, -3); ctx.lineTo(18, -3);
+            ctx.lineTo(18, 3); ctx.lineTo(4, 3); ctx.lineTo(4, 10); ctx.closePath(); ctx.fill();
+            ctx.restore();
+          } else { // crosswalk
+            ctx.fillStyle = "rgba(236,237,231,0.8)";
+            for (var s = 0; s < 5; s++) ctx.fillRect(x - 44 + s * 19, GROUND_Y + 20, 11, H - (GROUND_Y + 20) - 8);
+          }
+        }
+        function drawCone(sx) {
+          if (sx < -20 || sx > W + 20) return;
+          ctx.fillStyle = "#ff7a1e";
+          ctx.beginPath(); ctx.moveTo(sx, GROUND_Y - 18); ctx.lineTo(sx - 7, GROUND_Y); ctx.lineTo(sx + 7, GROUND_Y); ctx.closePath(); ctx.fill();
+          ctx.fillStyle = "#fff"; ctx.fillRect(sx - 5, GROUND_Y - 10, 10, 3);
+          ctx.fillStyle = "#e0e0e0"; ctx.fillRect(sx - 8, GROUND_Y - 1, 16, 3);
+        }
+        function drawRoad() {
+          // base oscura = baches / pozos
+          ctx.fillStyle = "#2b2d2f"; ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+          for (var i = 0; i < platforms.length; i++) {
+            var p = platforms[i], sx = p.x0 - scroll, w = p.x1 - p.x0;
+            if (sx > W || sx + w < 0) continue;
+
+            // asfalto
+            var g = ctx.createLinearGradient(0, GROUND_Y, 0, H);
+            g.addColorStop(0, "#7a7e83"); g.addColorStop(1, "#5c6064");
+            ctx.fillStyle = g; ctx.fillRect(sx, GROUND_Y, w, H - GROUND_Y);
+            // línea de orilla (blanca)
+            ctx.fillStyle = "rgba(238,238,228,0.8)"; ctx.fillRect(sx, GROUND_Y + 8, w, 4);
+            // línea central discontinua
+            ctx.fillStyle = "rgba(235,236,225,0.85)";
+            for (var wx = p.x0; wx < p.x1; wx += 72) {
+              var dx = wx - scroll;
+              if (dx > -40 && dx < W) ctx.fillRect(dx, GROUND_Y + 120, 38, 5);
+            }
+            // decoraciones de calle
+            for (var dd = 0; dd < p.decos.length; dd++) drawRoadDeco(p.decos[dd], sx);
+            // conos en las orillas (junto a los baches)
+            drawCone(sx); drawCone(sx + w);
+          }
+        }
+
+        // ---------- Cigarros ----------
+        function drawCoin(sx, sy, wob) {
+          if (coinImg.ready) { var s = 30 + wob; ctx.drawImage(coinImg.img, sx - s / 2, sy - s / 2, s, s); return; }
+          ctx.save();
+          ctx.translate(sx, sy + wob * 0.4); ctx.rotate(-0.35);
+          var L = 34, h = 9;
+          ctx.fillStyle = "#fdfdf6"; ctx.strokeStyle = "#d5d5cc"; ctx.lineWidth = 1.5;
+          roundRect(-L / 2, -h / 2, L, h, 3); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = "#d99a3a"; roundRect(L / 2 - 11, -h / 2, 11, h, 3); ctx.fill();
+          ctx.fillStyle = "#b9781f"; ctx.fillRect(L / 2 - 13, -h / 2, 2, h);
+          ctx.fillStyle = "#555"; roundRect(-L / 2 - 1, -h / 2, 4, h, 2); ctx.fill();
+          var glow = 0.6 + 0.4 * Math.abs(Math.sin(blinkT * 0.01));
+          ctx.save(); ctx.shadowColor = "#ff5a1e"; ctx.shadowBlur = 10 * glow;
+          ctx.fillStyle = "#ff6a2a"; ctx.beginPath(); ctx.arc(-L / 2 - 1, 0, 2.8, 0, 7); ctx.fill(); ctx.restore();
+          ctx.strokeStyle = "rgba(225,225,225,0.55)"; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(-L / 2 - 1, -2); ctx.quadraticCurveTo(-L / 2 - 9, -8, -L / 2 - 3, -16); ctx.stroke();
+          ctx.restore();
+        }
+
+        // ---------- Jugador ----------
+        function drawSkateboard() {
+          ctx.fillStyle = "#111";
+          ctx.beginPath(); ctx.arc(-28, -4, 8, 0, 7); ctx.fill();
+          ctx.beginPath(); ctx.arc(28, -4, 8, 0, 7); ctx.fill();
+          ctx.fillStyle = "#e23b2e"; ctx.strokeStyle = "#7a1a12"; ctx.lineWidth = 3;
+          roundRect(-46, -22, 92, 13, 6); ctx.fill(); ctx.stroke();
+        }
+        function drawRiderImage(bottom) {
+          var iw = sprite.img.width, ih = sprite.img.height; if (!iw || !ih) return;
+          var s = Math.min(120 / ih, 150 / iw), w = iw * s, h = ih * s;
+          ctx.drawImage(sprite.img, -w / 2, bottom - h, w, h);
+        }
+        function drawPouBody() {
+          ctx.save(); ctx.translate(0, -22);
+          ctx.fillStyle = "#5bd23a"; ctx.strokeStyle = "#2f8f1e"; ctx.lineWidth = 4;
+          ctx.beginPath(); ctx.moveTo(0, 0);
+          ctx.quadraticCurveTo(38, -4, 38, -40); ctx.quadraticCurveTo(38, -76, 0, -76);
+          ctx.quadraticCurveTo(-38, -76, -38, -40); ctx.quadraticCurveTo(-38, -4, 0, 0);
+          ctx.closePath(); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = "#fff";
+          ctx.beginPath(); ctx.arc(-12, -54, 11, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(13, -54, 11, 0, 7); ctx.fill();
+          ctx.fillStyle = "#111";
+          ctx.beginPath(); ctx.arc(-9, -54, 5, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(16, -54, 5, 0, 7); ctx.fill();
+          ctx.strokeStyle = "#2f6f16"; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(2, -36, 10, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke();
+          ctx.restore();
+        }
+        function drawPlayer() {
+          ctx.save(); ctx.translate(PX, player.feetY); ctx.rotate(player.rot);
+          ctx.fillStyle = "rgba(0,0,0,0.18)"; ctx.beginPath(); ctx.ellipse(0, 6, 44, 8, 0, 0, 7); ctx.fill();
+          var board = CONFIG.SHOW_BOARD !== false;
+          if (board) drawSkateboard();
+          var riderBottom = board ? -16 : 4;
+          if (sprite.ready) drawRiderImage(riderBottom);
+          else if (!CONFIG.SPRITE) drawPouBody();
+          ctx.restore();
+        }
+
+        function draw() {
+          drawSky();
+          drawFar();
+          drawRoadside();
+          drawNear();
+          drawRoad();
+          var wob = Math.sin(blinkT * 0.008) * 3;
+          for (var i = 0; i < coins.length; i++) {
+            var c = coins[i]; if (c.got) continue;
+            var sx = c.x - scroll; if (sx < -30 || sx > W + 30) continue;
+            drawCoin(sx, c.y, wob);
+          }
+          drawPlayer();
+        }
+
+        var lastTime = 0, blinkT = 0;
+        function loop(t) {
+          if (!lastTime) lastTime = t;
+          var dt = (t - lastTime) / 1000; lastTime = t; blinkT = t;
+          if (dt > 0.05) dt = 0.05;
+          if (state === "playing") update(dt);
+          draw();
+          requestAnimationFrame(loop);
+        }
+        function fit() {
+          var r = stage.getBoundingClientRect(), ratio = W / H, w = r.width, h = w / ratio;
+          if (h > r.height) { h = r.height; w = h * ratio; }
+          canvas.style.width = Math.max(1, Math.floor(w)) + "px";
+          canvas.style.height = Math.max(1, Math.floor(h)) + "px";
+        }
+        window.addEventListener("resize", fit);
+        if (window.ResizeObserver) new ResizeObserver(fit).observe(stage);
+
+        state = "start"; reset(); fit(); draw();
+        requestAnimationFrame(loop);
+      })();
+    </script>
+  </body>
+</html>
