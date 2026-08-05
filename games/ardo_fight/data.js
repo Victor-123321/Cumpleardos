@@ -1379,7 +1379,7 @@
                                     [0, [0, 32]]
                                 ]],
                                 [48, 26, null, 8939946990053354, false, [
-                                    [7, [2, "PRESS X/SHIFT TO QUIT"]]
+                                    [7, [2, "DALE X/SHIFT PA' SALIR"]]
                                 ]]
                             ]
                         ]
@@ -1472,7 +1472,7 @@
                                         ]],
                                         [3, 20, null, 2552257414134285, false, [
                                             [1, [2, "SansText"]],
-                                            [13, [7, [2, "so, uh, your browser\ndoesn't seem to support\nwebGL."]],
+                                            [13, [7, [2, "osea we, tu navegador\nno jala con webGL,\nse nota el skill issue."]],
                                                 [7, [2, "NoEffects1"]]
                                             ]
                                         ]],
@@ -1544,7 +1544,7 @@
                         ]],
                         [3, 20, null, 9564903039530182, false, [
                             [1, [2, "SansText"]],
-                            [13, [7, [2, "thats kind of a problem."]],
+                            [13, [7, [2, "ese sí es un problema, la neta."]],
                                 [7, [2, "NoEffects2"]]
                             ]
                         ]]
@@ -1563,7 +1563,7 @@
                         ]],
                         [3, 20, null, 6160373462858134, false, [
                             [1, [2, "SansText"]],
-                            [13, [7, [2, "some effects aren't going\nto work."]],
+                            [13, [7, [2, "van a faltar varios efectos,\nno se va a poder cocinar bien."]],
                                 [7, [2, "NoEffects3"]]
                             ]
                         ]]
@@ -1582,7 +1582,7 @@
                         ]],
                         [3, 20, null, 8938939640487405, false, [
                             [1, [2, "SansText"]],
-                            [13, [7, [2, "i had to make my speech\nbubble inverted just so\nyou can see what i'm\nsaying."]],
+                            [13, [7, [2, "tuve que voltear mi\nglobo de texto nomás\npara que veas lo que\nte estoy diciendo, zzz."]],
                                 [7, [2, "NoEffects4"]]
                             ]
                         ]]
@@ -1601,7 +1601,7 @@
                         ]],
                         [3, 20, null, 2694031369129686, false, [
                             [1, [2, "SansText"]],
-                            [13, [7, [2, "most importantly, my blue\nattacks will look like\nnormal attacks."]],
+                            [13, [7, [2, "lo más importante: mis ataques\nazules se van a ver igual\nque los normales, ojo ahí."]],
                                 [7, [2, "NoEffects5"]]
                             ]
                         ]]
@@ -1620,7 +1620,7 @@
                         ]],
                         [3, 20, null, 2552241740051866, false, [
                             [1, [2, "SansText"]],
-                            [13, [7, [2, "continue if you dare."]],
+                            [13, [7, [2, "dale que sigues, si te atreves... o ríndete de una vez, NPC."]],
                                 [7, [2, "NoEffects6"]]
                             ]
                         ]]
@@ -2354,7 +2354,7 @@
                                     [
                                         [14, 59, null, 4925109422702469, false, [
                                             [10, 4],
-                                            [7, [2, "* You felt your sins crawling\n  on your back."]]
+                                            [7, [2, "* Sientes tus pecados\n  reptando en tu espalda, ardido."]]
                                         ]]
                                     ]
                                 ],
@@ -2373,7 +2373,7 @@
                                     [
                                         [14, 59, null, 5244377573294855, false, [
                                             [10, 4],
-                                            [7, [2, "* You feel like you're going to\n  have a bad time."]]
+                                            [7, [2, "* Sientes que la vas a\n  pasar bien gacho ahorita."]]
                                         ]]
                                     ],
                                     [
@@ -2417,7 +2417,7 @@
                                     [
                                         [14, 59, null, 2670032810893258, false, [
                                             [10, 4],
-                                            [7, [2, "* Sans is taking a break."]]
+                                            [7, [2, "* Ardo se está tomando un descansito."]]
                                         ]]
                                     ]
                                 ],
@@ -2431,7 +2431,7 @@
                                     [
                                         [14, 59, null, 3736070576317147, false, [
                                             [10, 4],
-                                            [7, [2, "* The REAL battle finally begins."]]
+                                            [7, [2, "* Ora sí empieza la\n  verdadera pelea, agárrate."]]
                                         ]]
                                     ]
                                 ],
@@ -2445,7 +2445,7 @@
                                     [
                                         [14, 59, null, 6589808686267995, false, [
                                             [10, 4],
-                                            [7, [2, "* Reading this doesn't seem\n  like the best use of time."]]
+                                            [7, [2, "* Leer esto no es lo más\n  productivo ahorita, la neta."]]
                                         ]]
                                     ]
                                 ],
@@ -2459,7 +2459,7 @@
                                     [
                                         [14, 59, null, 5769331507923777, false, [
                                             [10, 4],
-                                            [7, [2, "* Sans is starting to look\n  really tired."]]
+                                            [7, [2, "* Ardo ya se está viendo\n  bien cansado, va de bajada."]]
                                         ]]
                                     ]
                                 ],
@@ -2473,7 +2473,7 @@
                                     [
                                         [14, 59, null, 6593676851472784, false, [
                                             [10, 4],
-                                            [7, [2, "* Sans is preparing something."]]
+                                            [7, [2, "* Ardo está cocinando algo..."]]
                                         ]]
                                     ]
                                 ],
@@ -2487,7 +2487,7 @@
                                     [
                                         [14, 59, null, 9963026487239779, false, [
                                             [10, 4],
-                                            [7, [2, "* Sans is getting ready to\n  use his special attack."]]
+                                            [7, [2, "* Ardo se está preparando\n  para soltar su movidón especial."]]
                                         ]]
                                     ]
                                 ],
@@ -2522,7 +2522,7 @@
                                         [5, 65, null, 5229506436586432, false],
                                         [3, 20, null, 1463949281462211, false, [
                                             [1, [2, "SansText"]],
-                                            [13, [7, [2, "huff... puff..."]],
+                                            [13, [7, [2, "uff... uff..."]],
                                                 [7, [2, "Win1"]]
                                             ]
                                         ]]
@@ -2588,7 +2588,7 @@
                     [
                         [3, 20, null, 522788098430892, false, [
                             [1, [2, "SansText"]],
-                            [13, [7, [2, "alright, i guess\nyou win."]],
+                            [13, [7, [2, "ta bueno, creo que\nganaste, GG."]],
                                 [7, [2, "Win2"]]
                             ]
                         ]]
@@ -2952,7 +2952,7 @@
                                                 [7, [0, 64]],
                                                 [7, [0, 272]],
                                                 [7, [0, 0]],
-                                                [7, [2, "* Sans"]],
+                                                [7, [2, "* Ardo"]],
                                                 [7, [23, "Action"]]
                                             ]
                                         ]]
@@ -3312,7 +3312,7 @@
                                         [7, [0, 64]],
                                         [7, [0, 272]],
                                         [7, [0, 0]],
-                                        [7, [2, "* Check"]],
+                                        [7, [2, "* Checar"]],
                                         [7, [2, "MenuCheckSans"]]
                                     ]
                                 ]]
@@ -3348,7 +3348,7 @@
                                 ]],
                                 [50, 33, null, 8302002307835332, false, [
                                     [10, 2],
-                                    [7, [2, "* SANS 1 ATK 1 DEF\n* The easiest enemy.\n* Can only deal 1 damage."]]
+                                    [7, [2, "* ARDO 1 ATK 1 DEF\n* El enemigo más fácil.\n* Solo puede tirar 1 de daño, ez."]]
                                 ]],
                                 [50, 33, null, 7783602027376122, false, [
                                     [10, 0],
@@ -3407,7 +3407,7 @@
                                 ]],
                                 [50, 33, null, 7697488528991464, false, [
                                     [10, 2],
-                                    [7, [2, "* Can't keep dodging forever.\n* Keep attacking."]]
+                                    [7, [2, "* No puedes esquivar\n  pa' siempre, deja de ser bot.\n* Sigue atacando."]]
                                 ]],
                                 [50, 33, null, 1065982881486434, false, [
                                     [10, 0],
@@ -3465,7 +3465,7 @@
                                             [0, [0, 2]]
                                         ]],
                                         [50, 26, null, 8274116410221162, false, [
-                                            [7, [2, "PAGE 1"]]
+                                            [7, [2, "PÁGINA 1"]]
                                         ]],
                                         [50, 33, null, 6081845998597264, false, [
                                             [10, 0],
@@ -3683,7 +3683,7 @@
                                                 ]],
                                                 [50, 33, null, 8525105579362746, false, [
                                                     [10, 2],
-                                                    [7, [10, [10, [10, [10, [10, [10, [2, "* You eat the "],
+                                                    [7, [10, [10, [10, [10, [10, [10, [2, "* Te devoras el "],
                                                                             [20, 59, 103, false, null, [
                                                                                 [23, "ItemID"],
                                                                                 [0, 2]
@@ -3693,14 +3693,14 @@
                                                                     ],
                                                                     [19, 106]
                                                                 ],
-                                                                [2, "* You recovered "]
+                                                                [2, "* Recuperaste "]
                                                             ],
                                                             [20, 59, 103, false, null, [
                                                                 [23, "ItemID"],
                                                                 [0, 1]
                                                             ]]
                                                         ],
-                                                        [2, " HP!"]
+                                                        [2, " de HP, let's go!"]
                                                     ]]
                                                 ]],
                                                 [50, 33, null, 4979570658458923, false, [
@@ -3747,7 +3747,7 @@
                                         [7, [0, 64]],
                                         [7, [0, 272]],
                                         [7, [0, 0]],
-                                        [7, [2, "* Spare"]],
+                                        [7, [2, "* Perdonar"]],
                                         [7, [2, "MenuSpare"]]
                                     ]
                                 ]]
@@ -3856,7 +3856,7 @@
                                     ],
                                     [
                                         [50, 26, null, 3088408406826475, false, [
-                                            [7, [10, [2, "PAGE "],
+                                            [7, [10, [2, "PÁGINA "],
                                                 [4, [19, 82, [
                                                         [7, [20, 62, 108, false, null],
                                                             [0, 4]
@@ -10470,7 +10470,7 @@
                                             [0, [0, 32]]
                                         ]],
                                         [48, 26, null, 349859121287884, false, [
-                                            [7, [2, "PRESS X/SHIFT TO QUIT"]]
+                                            [7, [2, "DALE X/SHIFT PA' SALIR"]]
                                         ]],
                                         [5, 30, null, 554512315000031, false, [
                                             [2, ["gameover", false]],
@@ -11188,7 +11188,7 @@
                                                             [0, [0, 2]]
                                                         ]],
                                                         [50, 26, null, 989636852540768, false, [
-                                                            [7, [2, "Don't play on mobile!\nYou have been warned!"]]
+                                                            [7, [2, "¡No juegues en el cel,\nya te avisamos, no chilles después!"]]
                                                         ]],
                                                         [-1, 21, null, 713870393895474, false, [
                                                             [11, "MobileWarned"],
@@ -11631,7 +11631,7 @@
                 [1, "EndlessStage", 0, 0, false, false, 1966297049622465, false],
                 [1, "PracticeTarget", 0, 60, false, false, 824857649224256, false],
                 [1, "SingleAttack", 1, "", false, false, 9637412728316299, false],
-                [1, "Name", 1, "Chara", false, false, 8522084662131715, false],
+                [1, "Name", 1, "Vitor", false, false, 8522084662131715, false],
                 [1, "HP", 0, 92, false, false, 4067313995094888, false],
                 [1, "MaxHP", 0, 92, false, false, 2742940924955148, false],
                 [1, "KR", 0, 0, false, false, 2189987320058474, false],
@@ -13204,7 +13204,7 @@
                             [1, [2, "RegisterItem"]],
                             [13, [7, [0, 0]],
                                 [7, [0, 99]],
-                                [7, [2, "Butterscotch Pie"]],
+                                [7, [2, "Pastel de Cajeta"]],
                                 [7, [2, "Pie"]]
                             ]
                         ]],
@@ -13212,7 +13212,7 @@
                             [1, [2, "RegisterItem"]],
                             [13, [7, [0, 0]],
                                 [7, [0, 90]],
-                                [7, [2, "Instant Noodles"]],
+                                [7, [2, "Sopa Maruchan"]],
                                 [7, [2, "I.Noodles"]]
                             ]
                         ]],
@@ -13220,7 +13220,7 @@
                             [1, [2, "RegisterItem"]],
                             [13, [7, [0, 0]],
                                 [7, [0, 60]],
-                                [7, [2, "Face Steak"]],
+                                [7, [2, "Bistec de Cara"]],
                                 [7, [2, "Steak"]]
                             ]
                         ]],
@@ -13228,8 +13228,8 @@
                             [1, [2, "RegisterItem"]],
                             [13, [7, [0, 0]],
                                 [7, [0, 40]],
-                                [7, [2, "Legendary Hero"]],
-                                [7, [2, "L. Hero"]]
+                                [7, [2, "Héroe Legendario, ya de plano god"]],
+                                [7, [2, "Héroe L."]]
                             ]
                         ]]
                     ]
@@ -13445,7 +13445,7 @@
                                     [0, [0, 32]]
                                 ]],
                                 [48, 26, null, 866871016798015, false, [
-                                    [7, [10, [10, [10, [2, "LOADING ATTACKS "],
+                                    [7, [10, [10, [10, [2, "CARGANDO ATAQUES "],
                                                 [23, "FileIndex"]
                                             ],
                                             [2, " / "]
@@ -13484,7 +13484,7 @@
                                     ],
                                     [
                                         [68, 26, null, 3276516335364258, false, [
-                                            [7, [10, [10, [10, [2, "LOADING ATTACKS "],
+                                            [7, [10, [10, [10, [2, "CARGANDO ATAQUES "],
                                                         [23, "FileIndex"]
                                                     ],
                                                     [2, " / "]
@@ -13650,7 +13650,7 @@
                                     [0, [0, 2]]
                                 ]],
                                 [50, 26, null, 6017732506802038, false, [
-                                    [7, [2, "Select your bad time"]]
+                                    [7, [2, "Elige tu peor rato"]]
                                 ]],
                                 [50, 258, null, 6681899051898119, false, [
                                     [3, 1]
@@ -13681,7 +13681,7 @@
                                         [7, [0, 192]],
                                         [7, [0, 160]],
                                         [7, [0, 3]],
-                                        [7, [2, "Single attack"]],
+                                        [7, [2, "Ataque individual"]],
                                         [7, [2, "MenuModeSingle"]]
                                     ]
                                 ]]
@@ -13738,7 +13738,7 @@
                                                     ]
                                                 ]],
                                                 [7, [19, 102]],
-                                                [7, [10, [2, "Phase "],
+                                                [7, [10, [2, "Fase "],
                                                     [4, [19, 102],
                                                         [0, 1]
                                                     ]
@@ -13799,7 +13799,7 @@
                                     [0, [0, 2]]
                                 ]],
                                 [50, 26, null, 4129082167688271, false, [
-                                    [7, [2, "Choose an attack"]]
+                                    [7, [2, "Elige un ataque"]]
                                 ]],
                                 [50, 258, null, 812164509132716, false, [
                                     [3, 1]

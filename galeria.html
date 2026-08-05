@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=800" />
+    <title>📸 Mega Galería del Ardo 📸</title>
+    <script type="text/javascript" nonce="46d52e4aca634b0583f37c7c09e" src="//local.adguard.org?ts=1785910796238&amp;type=content-script&amp;dmn=contribution.usercontent.google.com&amp;url=https%3A%2F%2Fcontribution.usercontent.google.com%2Fdownload%3Fc%3DCgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjAxOWQyY2M5MThiMGNmYmRkMDAwNjU4NDcxNzc2YzlkOTA2MmI5ZWEwZTAwMDc4OWYSCxIHENudzKKfGBgB%26filename%3Dgaleria.html%26opi%3D103135050&amp;app=manual_proxy&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="46d52e4aca634b0583f37c7c09e" src="//local.adguard.org?ts=1785910796238&amp;name=AdGuard%20Extra&amp;type=user-script"></script><link rel="stylesheet" href="stilo.css" />
+    <style>
+      .gallery-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        padding: 20px;
+        background: #000;
+        border: 5px dashed #00ff00;
+        margin: 20px;
+      }
+      .gallery-grid img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border: 4px double #ff00ff;
+        transition: transform 0.3s;
+        cursor: pointer; /* Indicar que es clickeable */
+      }
+      .gallery-grid img:hover {
+        transform: scale(1.1) rotate(5deg);
+        border-color: #ffff00;
+        z-index: 10;
+        box-shadow: 0 0 15px #00ffff;
+      }
+      
+      /* ESTILOS DEL MODAL (VISOR DE FOTOS) */
+      .modal {
+        display: none; 
+        position: fixed;
+        z-index: 100000; 
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro */
+        backdrop-filter: blur(5px);
+        text-align: center;
+      }
+      .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 85vh;
+        margin-top: 5vh;
+        border: 5px solid #ff00ff;
+        box-shadow: 0 0 30px #00ffff;
+        animation: zoomIn 0.3s ease;
+      }
+      @keyframes zoomIn {
+        from {transform: scale(0.5); opacity: 0;}
+        to {transform: scale(1); opacity: 1;}
+      }
+      .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        color: #ffff00;
+        font-size: 50px;
+        font-weight: bold;
+        transition: 0.3s;
+        cursor: pointer;
+        text-shadow: 2px 2px #ff0000;
+      }
+      .close-modal:hover {
+        color: #ff0000;
+        text-shadow: 2px 2px #ffff00;
+        transform: scale(1.2);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- EL MODAL INVISIBLE -->
+    <div id="visorModal" class="modal" onclick="cerrarModal()">
+      <span class="close-modal">&times;</span>
+      <img class="modal-content" id="imgExpandida">
+    </div>
+
+    <canvas id="confettiCanvas"></canvas>
+    <table>
+      <tr>
+        <td colspan="2" class="header">
+          <marquee direction="left">🖼️ ¡Bienvenido a la bliblioteca de Alejandria (pq se ardio)! 🖼️</marquee>
+          <h1 class="blink">Puro arte aqui</h1>
+        </td>
+      </tr>
+      <tr>
+        <td class="sidebar">
+          <h2>Menú</h2>
+          <a href="index.html" class="button" style="display:block; margin-bottom:10px;">🏠 Regresar</a>
+          <br>
+          <img src="https://www.gifsanimados.org/data/media/154/payaso-imagen-animada-0324.gif" />
+          <p class="blink" style="margin-top:20px;">Fotos cargadas: <span id="contador-fotos">0</span></p>
+        </td>
+        <td>
+          <h2>Todo el zoologico aqui raza</h2>
+          <p style="color:#00ffff; font-size:20px;">Haz clic en cualquier foto para versela bien we</p>
+          
+          <div class="gallery-grid" id="gallery-grid">
+            <!-- JS -->
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <script src="imagenes.js"></script>
+    <script>
+      // Funciones del Modal
+      function abrirModal(src) {
+        document.getElementById("visorModal").style.display = "block";
+        document.getElementById("imgExpandida").src = src;
+      }
+      function cerrarModal() {
+        document.getElementById("visorModal").style.display = "none";
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const grid = document.getElementById("gallery-grid");
+        const contador = document.getElementById("contador-fotos");
+        
+        if (typeof ardoImagenes !== "undefined" && grid) {
+          contador.textContent = ardoImagenes.length;
+          ardoImagenes.forEach(src => {
+            const img = document.createElement("img");
+            img.src = src;
+            img.loading = "lazy";
+            // Al hacer clic, se abre en grande
+            img.onclick = function() {
+              abrirModal(this.src);
+            };
+            grid.appendChild(img);
+          });
+        }
+      });
+    </script>
+    <script src="scripts.js"></script>
+  </body>
+</html>

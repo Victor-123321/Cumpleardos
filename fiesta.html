@@ -4,71 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=800" />
     <title>🎉 ¡Feliz Cumpleaños, Aldo! 🎂</title>
-    <link rel="stylesheet" href="stilo.css" />
+    <script type="text/javascript" nonce="46d52e4aca634b0583f37c7c09e" src="//local.adguard.org?ts=1785910796238&amp;type=content-script&amp;dmn=contribution.usercontent.google.com&amp;url=https%3A%2F%2Fcontribution.usercontent.google.com%2Fdownload%3Fc%3DCgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjA3MDZjZjBmODc4YzYwOGVhMDAwNjU4NDcxNzc2YzEwZDA2MmI5ZWEwZTAwMDc4OWYSCxIHENudzKKfGBgB%26filename%3Dindex.html%26opi%3D103135050&amp;app=manual_proxy&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="46d52e4aca634b0583f37c7c09e" src="//local.adguard.org?ts=1785910796238&amp;name=AdGuard%20Extra&amp;type=user-script"></script><link rel="stylesheet" href="stilo.css" />
+    <style>
+      /* Estilos del visor para el index */
+      .carousel-image { cursor: pointer; }
+      .modal {
+        display: none; position: fixed; z-index: 100000; left: 0; top: 0;
+        width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); text-align: center;
+      }
+      .modal-content {
+        margin: auto; display: block; max-width: 90%; max-height: 85vh; margin-top: 5vh;
+        border: 5px solid #ff00ff; box-shadow: 0 0 30px #00ffff; animation: zoomIn 0.3s ease;
+      }
+      @keyframes zoomIn { from {transform: scale(0.5); opacity: 0;} to {transform: scale(1); opacity: 1;} }
+      .close-modal {
+        position: absolute; top: 20px; right: 40px; color: #ffff00; font-size: 50px; font-weight: bold; cursor: pointer; text-shadow: 2px 2px #ff0000;
+      }
+      .close-modal:hover { color: #ff0000; text-shadow: 2px 2px #ffff00; transform: scale(1.2); }
+    </style>
   </head>
   <body>
+    <!-- MODAL -->
+    <div id="visorModal" class="modal" onclick="cerrarModal()">
+      <span class="close-modal">&times;</span>
+      <img class="modal-content" id="imgExpandida">
+    </div>
+
     <canvas id="confettiCanvas"></canvas>
     <div id="notification" class="notification"></div>
 
-    <img
-      id="particle1"
-      class="particle"
-      src="Ardo/2024-10-07-12-42-47-838.jpg"
-      alt="Partícula de fiesta 1"
-    />
-    <img
-      id="particle2"
-      class="particle"
-      src="Ardo/IMG_20240917_135807_230.jpg"
-      alt="Partícula de fiesta 2"
-    />
-    <img
-      id="particle3"
-      class="particle"
-      src="Ardo/2024-11-14-13-38-45-621.jpg"
-      alt="Partícula de fiesta 3"
-    /><img
-      id="particle4"
-      class="particle"
-      src="https://img1.picmix.com/output/stamp/normal/3/7/3/8/328373_73d99.gif"
-      alt="Partícula de fiesta 4"
-    />
-    <img
-      id="particle5"
-      class="particle"
-      src="https://img1.picmix.com/output/stamp/normal/3/7/3/8/328373_73d99.gif"
-      alt="Partícula de fiesta 5"
-    />
-    <img
-      id="particle6"
-      class="particle"
-      src="https://www.gifsanimados.org/data/media/154/payaso-imagen-animada-0324.gif"
-      alt="Partícula de fiesta 6"
-    />
-    <img
-      id="particle7"
-      class="particle"
-      src="https://www.gifsanimados.org/data/media/154/payaso-imagen-animada-0324.gif"
-      alt="Partícula de fiesta 7"
-    />
-    <img
-      id="particle8"
-      class="particle"
-      src="https://img1.picmix.com/output/stamp/normal/5/7/8/1/2151875_4c25b.gif"
-      alt="Partícula de fiesta 8"
-    />
-    <img
-      id="particle9"
-      class="particle"
-      src="https://img1.picmix.com/output/stamp/normal/5/7/8/1/2151875_4c25b.gif"
-      alt="Partícula de fiesta 9"
-    />
-    <img
-      id="particle10"
-      class="particle"
-      src="https://img1.picmix.com/output/stamp/normal/5/7/8/1/2151875_4c25b.gif"
-      alt="Partícula de fiesta 10"
-    />
+    <img id="particle1" class="particle" src="Ardo/Ardo_base/2024-10-07-12-42-47-838.jpg"/>
+    <img id="particle2" class="particle" src="Ardo/Ardo_base/IMG_20240917_135807_230.jpg"/>
+    <img id="particle3" class="particle" src="Ardo/Ardo_base/2024-11-14-13-38-45-621.jpg"/>
+    <img id="particle4" class="particle" src="https://img1.picmix.com/output/stamp/normal/3/7/3/8/328373_73d99.gif"/>
+    <img id="particle5" class="particle" src="https://img1.picmix.com/output/stamp/normal/3/7/3/8/328373_73d99.gif"/>
+    <img id="particle6" class="particle" src="https://www.gifsanimados.org/data/media/154/payaso-imagen-animada-0324.gif"/>
+    <img id="particle7" class="particle" src="https://www.gifsanimados.org/data/media/154/payaso-imagen-animada-0324.gif"/>
+    <img id="particle8" class="particle" src="https://img1.picmix.com/output/stamp/normal/5/7/8/1/2151875_4c25b.gif"/>
+    <img id="particle9" class="particle" src="https://img1.picmix.com/output/stamp/normal/5/7/8/1/2151875_4c25b.gif"/>
+    <img id="particle10" class="particle" src="https://img1.picmix.com/output/stamp/normal/5/7/8/1/2151875_4c25b.gif"/>
 
     <table>
       <tr>
@@ -83,169 +57,40 @@
           <h2>🎁 Regalos para Aldo 🎁</h2>
           <p class="blink">¡Zona de festejo en construcción!</p>
           <div class="under-construction">
-            <img
-              src="https://media.tenor.com/EF-qPwkqZgEAAAAC/evil-laugh-muahaha.gif"
-              alt="Contador de visitas"
-              width="100"
-              height="100"
-            />
+            <img src="https://media.tenor.com/EF-qPwkqZgEAAAAC/evil-laugh-muahaha.gif" width="100" height="100"/>
           </div>
-          <video style="width: 150px" muted autoplay loop>
-            <source src="Videos/chivas.mp4" />
-          </video>
+          <video style="width: 150px" muted autoplay loop><source src="Videos/chivas.mp4" /></video>
           <p>¡Vuelve pronto para juegos, chistes y más!</p>
-          <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank"
-            >¡Dale like a la fiesta de Ardo!</a
-          ><br />
-          <img
-            src="https://badhtml.com/img/sidebar-uc.gif"
-            alt="Contador de visitas"
-          />
+          <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">¡Dale like a la fiesta de Ardo!</a><br />
+          <img src="https://badhtml.com/img/sidebar-uc.gif"/>
           <p>Visitantes: 000042</p>
         </td>
         <td>
           <h2>🎂 ¡Déjale un mensaje a Aldo!</h2>
           <p class="blink">¡Escribe algo épico para Ardo!</p>
-          <textarea
-            id="message"
-            rows="4"
-            cols="50"
-            placeholder="Escribe tu mensaje para Aldo aquí..."
-          ></textarea
-          ><br />
+          <textarea id="message" rows="4" cols="50" placeholder="Escribe tu mensaje para Aldo aquí..."></textarea><br />
           <button class="button" onclick="sendMessage()">Enviar Mensaje</button>
-          <video
-            id="greetingVideo"
-            style="
-              display: none;
-              position: fixed;
-              top: 0;
-              left: 0;
-              width: 100vw;
-              height: 100vh;
-              object-fit: cover;
-              z-index: 1000;
-            "
-            src=""
-            type="video/mp4"
-          >
-            Your browser does not support the video tag.
-          </video>
+          
+          <video id="greetingVideo" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 1000;" src="" type="video/mp4"></video>
+          
           <h3>🎉 ¡Galería Épica de Ardo! 🎉</h3>
+          <p style="color:#ffff00;">(Dale click a las fotos para verlas en grande)</p>
           <div class="carousel">
-            <div class="carousel-container">
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/2024-10-07-12-42-47-838.jpg"
-                alt="Foto de Aldo 1"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/IMG_20240917_135807_230.jpg"
-                alt="Foto de Aldo 2"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/2024-11-14-13-38-45-621.jpg"
-                alt="Foto de Aldo 3"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/IMG_20240924_135530_216.jpg"
-                alt="Foto de Aldo 4"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/2024-10-07-12-43-00-574.jpg"
-                alt="Foto de Aldo 5"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/SGCAM_20241002_154754958.PORTRAIT.jpg"
-                alt="Foto de Aldo 6"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/Captura de pantalla 2025-08-02 140840.png"
-                alt="Foto de Aldo 7"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/Imagen de WhatsApp 2025-08-02 a las 14.07.10_9016500d.jpg"
-                alt="Foto de Aldo 8"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/Imagen de WhatsApp 2025-08-02 a las 14.09.36_45d4900f.jpg"
-                alt="Foto de Aldo 9"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/Imagen de WhatsApp 2025-08-02 a las 14.09.37_2efe5054.jpg"
-                alt="Foto de Aldo 10"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/Imagen de WhatsApp 2025-08-02 a las 14.09.37_3fe5a90f.jpg"
-                alt="Foto de Aldo 11"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/Imagen de WhatsApp 2025-08-02 a las 14.09.38_a9bc56de.jpg"
-                alt="Foto de Aldo 12"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/Imagen de WhatsApp 2025-08-02 a las 14.09.38_c8b1ad3a.jpg"
-                alt="Foto de Aldo 13"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/imgx.jpg"
-                alt="Foto de Aldo 14"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/image.png"
-                alt="Foto de Aldo 15"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/genaroreaction.jpg"
-                alt="Foto de Aldo 16"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/aldopizarron.jpg"
-                alt="Foto de Aldo 17"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/aldoedgar.jpg"
-                alt="Foto de Aldo 18"
-              />
-              <img
-                class="carousel-image"
-                src="Ardo/Ardo_base/foto_joto.jpeg"
-                alt="Foto de Aldo 19"
-              />
+            <div class="carousel-container" id="carousel-container">
+              <!-- JS INYECTARÁ LAS 10 FOTOS AQUÍ -->
             </div>
           </div>
+          
+          <a href="galeria.html" class="button" style="display:inline-block; margin-bottom:20px;">👀 VER TODAS LAS FOTOS 👀</a>
 
           <h3>🎉 ¿Por qué Aldo es el mejor?</h3>
           <p style="font-size: 20px; color: #00ffff">
-            Esta página es un homenaje al Aldo, con travestis, música épica y
-            diseño aca bien aca, celebramos al Ardo con el mejor estilo web del
-            universo. ¡Viva el CUMpleañero!
+            Esta página es un homenaje al Aldo, con travestis, música épica y diseño aca bien aca, celebramos al Ardo con el mejor estilo web del universo. ¡Viva el CUMpleañero!
           </p>
-          <button class="button" onclick="showPluginMessage()">
-            Descargar Efectos
-          </button>
+          <button class="button" onclick="showPluginMessage()">Descargar Efectos</button>
 
           <div style="padding: 15px; margin-top: 15px;">
-            <a href="./ruleta/index.html" class="button">
-              PRUEBA TU SUERTE
-            </a>
+            <a href="./ruleta/index.html" class="button">PRUEBA TU SUERTE</a>
             <a href="./games/index.html" class="button">🎮 IR A LA SALA DE JUEGOS</a>
             <a href="./literatura/index.html" class="button">📚 BIBLIOTECA DEL ARDO</a>
           </div>
@@ -257,26 +102,46 @@
             <p>
               © 1992-2025 Cumpleaños de Aldo |
               <a href="Videos.html">Acerca de Aldo</a> |
-              <a href="https://www.instagram.com/3miliano_galvan/"
-                >Contacta a Ardo</a
-              >
+              <a href="https://www.instagram.com/3miliano_galvan/">Contacta a Ardo</a>
               <a href="https://www.youtube.com/watch?v=3VEt6G0152Q">Términos</a>
             </p>
-            <p class="blink">
-              ¡Esta web usa cookies para saber cuantas veces te ardiste!
-            </p>
+            <p class="blink">¡Esta web usa cookies para saber cuantas veces te ardiste!</p>
             <div style="position: absolute; width: 100px; right: 0; bottom: 0">
-              <img
-                style="width: 100px; height: 100px"
-                src="https://preview.redd.it/is-the-berserker-underwhelming-as-the-people-are-saying-v0-ibpj5tv4u5ge1.png?auto=webp&s=e310bdcbc63c154ebd352ddf7574089da81c15c2"
-              />
+              <img style="width: 100px; height: 100px" src="https://preview.redd.it/is-the-berserker-underwhelming-as-the-people-are-saying-v0-ibpj5tv4u5ge1.png?auto=webp&s=e310bdcbc63c154ebd352ddf7574089da81c15c2"/>
               <p>goon corner</p>
             </div>
           </div>
         </td>
       </tr>
     </table>
+    
+    <script src="imagenes.js"></script>
+    <script>
+      function abrirModal(src) {
+        document.getElementById("visorModal").style.display = "block";
+        document.getElementById("imgExpandida").src = src;
+      }
+      function cerrarModal() {
+        document.getElementById("visorModal").style.display = "none";
+      }
 
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("carousel-container");
+        if (container && typeof ardoImagenes !== "undefined") {
+          const mezcladas = ardoImagenes.sort(() => 0.5 - Math.random());
+          const seleccionadas = mezcladas.slice(0, 10);
+          
+          seleccionadas.forEach(src => {
+            const img = document.createElement("img");
+            img.className = "carousel-image";
+            img.src = src;
+            // Abrir imagen completa al dar clic
+            img.onclick = function() { abrirModal(this.src); };
+            container.appendChild(img);
+          });
+        }
+      });
+    </script>
     <script src="scripts.js"></script>
   </body>
 </html>

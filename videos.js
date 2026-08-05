@@ -16,6 +16,19 @@ window.videosAldo = [
   "Videos/video10.mp4",
   "Videos/video11.mp4",
   "Videos/video12.mp4",
+  "Videos/video13.mp4",
+  "Videos/video14.mp4",
+  "Videos/video15.mp4",
+  "Videos/video16.mp4",
+  "Videos/video17.mp4",
+  "Videos/video18.mp4",
+  "Videos/video19.mp4",
+  "Videos/video20.mp4",
+  "Videos/video21.mp4",
+  "Videos/video22.mp4",
+  "Videos/video23.mp4",
+  "Videos/video24.mp4",
+
   "Videos/beeso.mp4", // nuevo
   "Videos/patria.mp4" // nuevo
 ];
