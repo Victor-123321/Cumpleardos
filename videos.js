@@ -1,3 +1,32 @@
+// ===========================================================
+//  LISTA DE VIDEOS ("Aldo Momentos")
+//  El botón "Ver más Aldo Momentos" avanza en ESTE orden y da la
+//  vuelta al llegar al final. Para agregar más, solo súmalos aquí.
+// ===========================================================
+window.videosAldo = [
+  "Videos/video1.mp4",
+  "Videos/video2.mp4",
+  "Videos/video3.mp4",
+  "Videos/video4.mp4",
+  "Videos/video5.mp4",
+  "Videos/video6.mp4",
+  "Videos/video7.mp4",
+  "Videos/video8.mp4",
+  "Videos/video9.mp4",
+  "Videos/video10.mp4",
+  "Videos/video11.mp4",
+  "Videos/video12.mp4",
+  "Videos/beeso.mp4", // nuevo
+  "Videos/patria.mp4" // nuevo
+];
+
+// Índice guardado (qué video toca mostrar)
+function leerIndiceVideo() {
+  var i = parseInt(localStorage.getItem("aldoVideoIndex") || "0", 10);
+  if (isNaN(i) || i < 0 || i >= window.videosAldo.length) i = 0;
+  return i;
+}
+
 // Función para reposicionar partículas aleatoriamente
 function repositionParticles() {
   const particles = document.querySelectorAll(".particle");
@@ -11,13 +40,12 @@ function repositionParticles() {
   });
 }
 
-// Intentar reproducir al cargar la página y cargar video aleatorio
+// Al cargar: mostrar el video que toca según el índice guardado
 window.addEventListener("load", () => {
   try {
-    // Cargar video aleatorio
-    const videoNumber = Math.floor(Math.random() * 12) + 1; // Número entre 1 y 11
+    const idx = leerIndiceVideo();
     const videoSource = document.getElementById("videoSource");
-    videoSource.src = `Videos/video${videoNumber}.mp4`;
+    videoSource.src = window.videosAldo[idx];
     const video = document.getElementById("birthdayVideo");
     video.load(); // Recargar el video con la nueva fuente
     const videoPromise = video.play();

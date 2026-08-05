@@ -84,6 +84,11 @@
               Tu navegador no soporta videos. ¡Instala Flash! Puto jodido.
             </video>
           </div>
+
+          <button class="button blink" onclick="siguienteMomento()">
+            🎬 Ver más Aldo Momentos 🎬
+          </button>
+
           <button class="button" onclick="window.location.href='fiesta.html'">
             Volver a la Fiesta de Aldo
           </button>
@@ -110,5 +115,20 @@
     </table>
 
     <script src="videos.js"></script>
+    <script>
+      /* El botón "Ver más Aldo Momentos" avanza al SIGUIENTE video de la
+         lista que está en videos.js (window.videosAldo) y recarga la página.
+         Para agregar/quitar videos, edita esa lista en videos.js. */
+      function siguienteMomento() {
+        var lista = window.videosAldo || [];
+        if (lista.length) {
+          var i = parseInt(localStorage.getItem("aldoVideoIndex") || "0", 10);
+          if (isNaN(i)) i = 0;
+          i = (i + 1) % lista.length;
+          localStorage.setItem("aldoVideoIndex", i);
+        }
+        location.reload();
+      }
+    </script>
   </body>
 </html>
